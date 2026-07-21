@@ -120,6 +120,13 @@ app.post("/students", async (req, res) => {
   }
 });
 
+app.get("/", (req, res) => {
+  res.json({
+    message: "Student Management System API is running",
+    status: "success"
+  });
+});
+
 /* Get All Students */
 app.get("/students", async (req, res) => {
   try {
