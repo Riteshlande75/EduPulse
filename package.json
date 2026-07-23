@@ -2,8 +2,12 @@
   "name": "student-management-app",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "Backend/server.js",
   "scripts": {
+    "start": "cmd /c \"start /b node Backend/server.js & timeout /t 2 /nobreak >nul & start http://localhost:5000\"",
+    "start:backend": "cd Backend && npm start",
+    "start:frontend": "cd Frontend && npm start",
+    "dev": "cmd /c \"start /b node Backend/server.js & timeout /t 2 /nobreak >nul & start http://localhost:5000\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
