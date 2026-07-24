@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Management System</title>
+  <meta name="description" content="Modern Student Management System — Dashboard, Student Directory, Courses, and Settings." />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <div class="app-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="brand">
+        <i class="fas fa-graduation-cap"></i>
+        <span>StudentMS</span>
+      </div>
+
+      <ul class="nav-list">
+        <li class="nav-item active" data-view="dashboard">
+          <a href="#" onclick="switchView('dashboard'); return false;">
+            <i class="fas fa-chart-pie"></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li class="nav-item" data-view="students">
+          <a href="#" onclick="switchView('students'); return false;">
+            <i class="fas fa-users"></i>
+            <span>Students</span>
+          </a>
+        </li>
+        <li class="nav-item" data-view="courses">
+          <a href="#" onclick="switchView('courses'); return false;">
+            <i class="fas fa-book-open"></i>
+            <span>Courses</span>
+          </a>
+        </li>
+        <li class="nav-item" data-view="settings">
+          <a href="#" onclick="switchView('settings'); return false;">
+            <i class="fas fa-cog"></i>
+            <span>Settings</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <div id="sidebarUserProfile" class="sidebar-user-card" style="display: none;">
+          <div class="user-avatar-sm" id="sidebarUserAvatar">ST</div>
+          <div class="sidebar-user-info">
+            <div class="sidebar-user-name" id="sidebarUserName">Student</div>
+            <div class="sidebar-user-email" id="sidebarUserEmail">student@university.edu</div>
+          </div>
+          <button class="btn-sidebar-logout" id="sidebarLogoutBtn" title="Sign Out Account" onclick="handleLogout()">
+            <i class="fas fa-sign-out-alt"></i>
+          </button>
+        </div>
+
+        <div id="sidebarAuthBtns" class="sidebar-auth-btns">
+          <a href="login.html" class="btn btn-secondary" style="width: 100%; justify-content: center; font-size: 0.825rem;">
+            <i class="fas fa-sign-in-alt"></i> Sign In
+          </a>
+          <a href="register.html" class="btn btn-primary" style="width: 100%; justify-content: center; font-size: 0.825rem;">
+            <i class="fas fa-user-plus"></i> Register Here
+          </a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+      <!-- TOP HEADER -->
+      <header class="top-header">
+        <div class="header-title">
+          <h1 id="pageTitle">Dashboard Overview</h1>
+          <p id="pageSubtitle">Real-time key metrics and student directory summary</p>
+        </div>
+        <div class="header-actions">
+          <button class="theme-toggle-btn" id="themeToggleBtn" title="Toggle Light/Dark Theme">
+            <i class="fas fa-sun" id="themeIcon"></i>
+          </button>
+          <button class="btn btn-primary" id="addStudentBtn">
+            <i class="fas fa-plus"></i> Add Student
+          </button>
+        </div>
+      </header>
+
+      <!-- VIEW SECTIONS -->
+      <div class="dashboard-body">
+
+        <!-- VIEW 1: DASHBOARD -->
+        <section id="view-dashboard" class="view-section active">
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon total"><i class="fas fa-users"></i></div>
+              <div class="stat-info">
+                <div class="stat-value" id="statTotalStudents">0</div>
+                <div class="stat-label">Total Students</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon active"><i class="fas fa-user-check"></i></div>
+              <div class="stat-info">
+                <div class="stat-value" id="statActiveStudents">0</div>
+                <div class="stat-label">Active Students</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon inactive"><i class="fas fa-user-times"></i></div>
+              <div class="stat-info">
+                <div class="stat-value" id="statInactiveStudents">0</div>
+                <div class="stat-label">Inactive Students</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon courses"><i class="fas fa-book"></i></div>
+              <div class="stat-info">
+                <div class="stat-value" id="statTotalCourses">0</div>
+                <div class="stat-label">Course Programs</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top: 2rem;">
+            <div class="section-header">
+              <h2 class="section-title">Recent Students</h2>
+            </div>
+            <div class="table-card" id="dashboardTableContainer">
+              <table class="students-table">
+                <thead>
+                  <tr>
+                    <th style="width: 32%;">Student</th>
+                    <th style="width: 24%;">Course</th>
+                    <th style="width: 18%;">Enrollment Date</th>
+                    <th style="width: 14%;">Status</th>
+                    <th style="width: 12%; text-align: right;">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="dashboardTableBody" class="studentsTableBody">
+                  <tr><td colspan="5" class="empty-state">Loading students...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- VIEW 2: STUDENTS -->
+        <section id="view-students" class="view-section">
+          <div class="toolbar-card" style="margin-bottom: 1.5rem;">
+            <div class="search-filter-group">
+              <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search by student name, email, or course..." />
+              </div>
+              <select class="select-filter courseFilterSelect" id="courseFilter">
+                <option value="all">All Courses</option>
+              </select>
+              <select class="select-filter" id="statusFilter">
+                <option value="all">All Status</option>
+                <option value="active">Active Students</option>
+                <option value="inactive">Inactive Students</option>
+              </select>
+            </div>
+          </div>
+          <div class="table-card">
+            <table class="students-table">
+              <thead>
+                <tr>
+                  <th style="width: 32%;">Student</th>
+                  <th style="width: 24%;">Course</th>
+                  <th style="width: 18%;">Enrollment Date</th>
+                  <th style="width: 14%;">Status</th>
+                  <th style="width: 12%; text-align: right;">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="studentsTableBody" class="studentsTableBody">
+                <tr><td colspan="5" class="empty-state">Loading students...</td></tr>
+              </tbody>
+            </table>
+            <div class="pagination-footer">
+              <div class="pagination-info">
+                Showing <span id="pageStart">0</span> to <span id="pageEnd">0</span> of <span id="totalRecords">0</span> students
+              </div>
+              <div class="pagination-controls">
+                <button class="btn btn-secondary btn-sm" id="prevPageBtn" disabled>
+                  <i class="fas fa-chevron-left"></i> Previous
+                </button>
+                <span class="page-indicator" id="pageIndicator">Page 1 of 1</span>
+                <button class="btn btn-secondary btn-sm" id="nextPageBtn" disabled>
+                  Next <i class="fas fa-chevron-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- VIEW 3: COURSES -->
+        <section id="view-courses" class="view-section">
+          <div class="section-header">
+            <h2 class="section-title">Academic Courses</h2>
+          </div>
+          <div class="courses-grid" id="coursesGrid">
+            <p style="color: var(--text-muted);">Loading courses...</p>
+          </div>
+        </section>
+
+        <!-- VIEW 4: SETTINGS -->
+        <section id="view-settings" class="view-section">
+          <div class="settings-grid">
+
+            <!-- Student Account Profile Card -->
+            <div class="settings-card" id="userSettingsCard">
+              <div class="settings-card-header">
+                <i class="fas fa-user-circle"></i>
+                <h3>Student Account Profile</h3>
+              </div>
+              <div id="userSettingsInfo">
+                <p style="color: var(--text-muted);">Checking session status...</p>
+              </div>
+            </div>
+
+            <div class="settings-card">
+              <div class="settings-card-header">
+                <i class="fas fa-palette"></i>
+                <h3>Appearance & Theme</h3>
+              </div>
+              <p>Customize the visual interface preference for your session.</p>
+              <div style="margin-top: 1rem;">
+                <button class="btn btn-secondary" onclick="toggleTheme()">
+                  <i class="fas fa-adjust"></i> Toggle Dark / Light Theme
+                </button>
+              </div>
+            </div>
+
+            <div class="settings-card">
+              <div class="settings-card-header">
+                <i class="fas fa-server"></i>
+                <h3>API Server Connection</h3>
+              </div>
+              <p>Current Backend Endpoint URL:</p>
+              <div class="code-block" id="settingsApiUrl">http://localhost:5000/students</div>
+              <div style="margin-top: 1rem;">
+                <button class="btn btn-secondary" onclick="checkBackendHealth()">
+                  <i class="fas fa-sync-alt"></i> Re-check Connection
+                </button>
+              </div>
+            </div>
+
+            <div class="settings-card">
+              <div class="settings-card-header">
+                <i class="fas fa-database"></i>
+                <h3>Local Storage & Cache</h3>
+              </div>
+              <p>Clear cached student demo records stored in your browser.</p>
+              <div style="margin-top: 1rem;">
+                <button class="btn btn-danger" onclick="resetLocalCache()">
+                  <i class="fas fa-trash-alt"></i> Reset Local Cache
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- ADD / EDIT STUDENT MODAL -->
+  <div class="modal-backdrop" id="studentModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modalTitle">Add New Student</h3>
+        <button class="modal-close" onclick="closeAllModals()"><i class="fas fa-times"></i></button>
+      </div>
+      <form id="studentForm">
+        <div class="form-group">
+          <label class="form-label">Full Name *</label>
+          <input type="text" id="studentNameInput" class="form-input" placeholder="e.g. Alex Johnson" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address *</label>
+          <input type="email" id="studentEmailInput" class="form-input" placeholder="e.g. alex@university.edu" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Course Program *</label>
+          <input type="text" id="studentCourseInput" class="form-input" placeholder="e.g. Computer Science" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Enrollment Date *</label>
+          <input type="date" id="enrollmentDateInput" class="form-input" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Status</label>
+          <select id="studentStatusInput" class="form-input">
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeAllModals()">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="saveStudentBtn">Save Student</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- VIEW STUDENT DETAILS MODAL -->
+  <div class="modal-backdrop" id="viewModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3><i class="fas fa-id-card" style="color: var(--accent-primary); margin-right: 0.5rem;"></i> Student Profile Details</h3>
+        <button class="modal-close" onclick="closeAllModals()"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="modal-body" id="viewDetailsContent">
+        <!-- Injected via JavaScript -->
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeAllModals()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- DELETE CONFIRMATION MODAL -->
+  <div class="modal-backdrop" id="deleteModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Confirm Delete</h3>
+        <button class="modal-close" onclick="closeAllModals()"><i class="fas fa-times"></i></button>
+      </div>
+      <p style="margin-bottom: 1rem; color: var(--text-muted);">
+        Are you sure you want to delete <strong id="deleteStudentName"></strong>?
+        This action cannot be undone.
+      </p>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeAllModals()">Cancel</button>
+        <button class="btn btn-danger" id="confirmDeleteBtn" onclick="handleDeleteStudent()">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
