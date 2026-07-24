@@ -1,49 +1,46 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Student Management System - A modern web application to manage student records, courses, enrollment dates, and status.">
-  <title>EduPulse | Student Management System</title>
-  
-  <!-- FontAwesome Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
-  <!-- Custom Styles -->
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Management System</title>
+  <meta name="description" content="Modern Student Management System — Dashboard, Student Directory, Courses, and Settings." />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 </head>
 <body>
-  <div class="app-container">
-    <!-- Sidebar Navigation -->
+
+  <div class="app-layout">
+
+    <!-- SIDEBAR -->
     <aside class="sidebar">
       <div class="brand">
-        <div class="brand-icon">
-          <i class="fas fa-user-graduate"></i>
-        </div>
-        <span>EduPulse</span>
+        <i class="fas fa-graduation-cap"></i>
+        <span>StudentMS</span>
       </div>
 
-      <ul class="nav-menu">
+      <ul class="nav-list">
         <li class="nav-item active" data-view="dashboard">
-          <a href="#dashboard">
+          <a href="#" onclick="switchView('dashboard'); return false;">
             <i class="fas fa-chart-pie"></i>
             <span>Dashboard</span>
           </a>
         </li>
         <li class="nav-item" data-view="students">
-          <a href="#students">
+          <a href="#" onclick="switchView('students'); return false;">
             <i class="fas fa-users"></i>
             <span>Students</span>
           </a>
         </li>
         <li class="nav-item" data-view="courses">
-          <a href="#courses">
-            <i class="fas fa-book"></i>
+          <a href="#" onclick="switchView('courses'); return false;">
+            <i class="fas fa-book-open"></i>
             <span>Courses</span>
           </a>
         </li>
         <li class="nav-item" data-view="settings">
-          <a href="#settings">
+          <a href="#" onclick="switchView('settings'); return false;">
             <i class="fas fa-cog"></i>
             <span>Settings</span>
           </a>
@@ -66,22 +63,22 @@
           <a href="login.html" class="btn btn-secondary" style="width: 100%; justify-content: center; font-size: 0.825rem;">
             <i class="fas fa-sign-in-alt"></i> Sign In
           </a>
-          <a href="signup.html" class="btn btn-primary" style="width: 100%; justify-content: center; font-size: 0.825rem;">
-            <i class="fas fa-user-plus"></i> Sign Up
+          <a href="register.html" class="btn btn-primary" style="width: 100%; justify-content: center; font-size: 0.825rem;">
+            <i class="fas fa-user-plus"></i> Register Here
           </a>
         </div>
       </div>
     </aside>
 
-    <!-- Main Content Area -->
+    <!-- MAIN CONTENT -->
     <main class="main-content">
-      <!-- Top Header -->
+
+      <!-- TOP HEADER -->
       <header class="top-header">
         <div class="header-title">
           <h1 id="pageTitle">Dashboard Overview</h1>
           <p id="pageSubtitle">Real-time key metrics and student directory summary</p>
         </div>
-
         <div class="header-actions">
           <button class="theme-toggle-btn" id="themeToggleBtn" title="Toggle Light/Dark Theme">
             <i class="fas fa-sun" id="themeIcon"></i>
@@ -92,158 +89,130 @@
         </div>
       </header>
 
-      <!-- Dashboard Content Body -->
+      <!-- VIEW SECTIONS -->
       <div class="dashboard-body">
-        
-        <!-- VIEW 1: DASHBOARD VIEW -->
+
+        <!-- VIEW 1: DASHBOARD -->
         <section id="view-dashboard" class="view-section active">
-          <!-- Overview Statistics Cards -->
           <div class="stats-grid">
             <div class="stat-card">
-              <div class="stat-icon total">
-                <i class="fas fa-user-graduate"></i>
-              </div>
+              <div class="stat-icon total"><i class="fas fa-users"></i></div>
               <div class="stat-info">
                 <div class="stat-value" id="statTotalStudents">0</div>
                 <div class="stat-label">Total Students</div>
               </div>
             </div>
-
             <div class="stat-card">
-              <div class="stat-icon active">
-                <i class="fas fa-user-check"></i>
-              </div>
+              <div class="stat-icon active"><i class="fas fa-user-check"></i></div>
               <div class="stat-info">
                 <div class="stat-value" id="statActiveStudents">0</div>
-                <div class="stat-label">Active Enrolled</div>
+                <div class="stat-label">Active Students</div>
               </div>
             </div>
-
             <div class="stat-card">
-              <div class="stat-icon inactive">
-                <i class="fas fa-user-clock"></i>
-              </div>
+              <div class="stat-icon inactive"><i class="fas fa-user-times"></i></div>
               <div class="stat-info">
                 <div class="stat-value" id="statInactiveStudents">0</div>
-                <div class="stat-label">Inactive / On Leave</div>
+                <div class="stat-label">Inactive Students</div>
               </div>
             </div>
-
             <div class="stat-card">
-              <div class="stat-icon courses">
-                <i class="fas fa-graduation-cap"></i>
-              </div>
+              <div class="stat-icon courses"><i class="fas fa-book"></i></div>
               <div class="stat-info">
                 <div class="stat-value" id="statTotalCourses">0</div>
-                <div class="stat-label">Active Courses</div>
+                <div class="stat-label">Course Programs</div>
               </div>
             </div>
           </div>
 
-          <!-- Controls Toolbar (Search & Filters) -->
-          <div class="toolbar-card">
-            <div class="search-filter-group">
-              <div class="search-box">
-                <i class="fas fa-search"></i>
-                <input type="text" class="searchInput" placeholder="Search by name, email, or course...">
-              </div>
-
-              <select class="select-filter statusFilterSelect">
-                <option value="all">All Statuses</option>
-                <option value="active">Active Only</option>
-                <option value="inactive">Inactive Only</option>
-              </select>
-
-              <select class="select-filter courseFilterSelect">
-                <option value="all">All Courses</option>
-              </select>
+          <div style="margin-top: 2rem;">
+            <div class="section-header">
+              <h2 class="section-title">Recent Students</h2>
             </div>
-          </div>
-
-          <!-- Student Data Table Container -->
-          <div class="table-card">
-            <div class="table-responsive">
+            <div class="table-card" id="dashboardTableContainer">
               <table class="students-table">
                 <thead>
                   <tr>
-                    <th>Student Profile</th>
-                    <th>Course</th>
-                    <th>Enrollment Date</th>
-                    <th>Status</th>
-                    <th>Actions</th>
+                    <th style="width: 32%;">Student</th>
+                    <th style="width: 24%;">Course</th>
+                    <th style="width: 18%;">Enrollment Date</th>
+                    <th style="width: 14%;">Status</th>
+                    <th style="width: 12%; text-align: right;">Actions</th>
                   </tr>
                 </thead>
-                <tbody class="studentsTableBody">
-                  <!-- Dynamically populated via JS -->
+                <tbody id="dashboardTableBody" class="studentsTableBody">
+                  <tr><td colspan="5" class="empty-state">Loading students...</td></tr>
                 </tbody>
               </table>
             </div>
           </div>
         </section>
 
-        <!-- VIEW 2: STUDENTS DIRECTORY VIEW -->
+        <!-- VIEW 2: STUDENTS -->
         <section id="view-students" class="view-section">
-          <!-- Toolbar (Search & Filters for Students) -->
-          <div class="toolbar-card">
+          <div class="toolbar-card" style="margin-bottom: 1.5rem;">
             <div class="search-filter-group">
               <div class="search-box">
                 <i class="fas fa-search"></i>
-                <input type="text" class="searchInput" placeholder="Search student records...">
+                <input type="text" id="searchInput" placeholder="Search by student name, email, or course..." />
               </div>
-
-              <select class="select-filter statusFilterSelect">
-                <option value="all">All Statuses</option>
-                <option value="active">Active</option>
-                <option value="inactive">Inactive</option>
-              </select>
-
-              <select class="select-filter courseFilterSelect">
+              <select class="select-filter courseFilterSelect" id="courseFilter">
                 <option value="all">All Courses</option>
               </select>
+              <select class="select-filter" id="statusFilter">
+                <option value="all">All Status</option>
+                <option value="active">Active Students</option>
+                <option value="inactive">Inactive Students</option>
+              </select>
             </div>
-
-            <button class="btn btn-primary" onclick="openAddModal()">
-              <i class="fas fa-user-plus"></i> New Student
-            </button>
           </div>
-
-          <!-- Full Student Data Table Container -->
           <div class="table-card">
-            <div class="table-responsive">
-              <table class="students-table">
-                <thead>
-                  <tr>
-                    <th>Student Profile</th>
-                    <th>Course</th>
-                    <th>Enrollment Date</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody class="studentsTableBody">
-                  <!-- Shared dynamic table body -->
-                </tbody>
-              </table>
+            <table class="students-table">
+              <thead>
+                <tr>
+                  <th style="width: 32%;">Student</th>
+                  <th style="width: 24%;">Course</th>
+                  <th style="width: 18%;">Enrollment Date</th>
+                  <th style="width: 14%;">Status</th>
+                  <th style="width: 12%; text-align: right;">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="studentsTableBody" class="studentsTableBody">
+                <tr><td colspan="5" class="empty-state">Loading students...</td></tr>
+              </tbody>
+            </table>
+            <div class="pagination-footer">
+              <div class="pagination-info">
+                Showing <span id="pageStart">0</span> to <span id="pageEnd">0</span> of <span id="totalRecords">0</span> students
+              </div>
+              <div class="pagination-controls">
+                <button class="btn btn-secondary btn-sm" id="prevPageBtn" disabled>
+                  <i class="fas fa-chevron-left"></i> Previous
+                </button>
+                <span class="page-indicator" id="pageIndicator">Page 1 of 1</span>
+                <button class="btn btn-secondary btn-sm" id="nextPageBtn" disabled>
+                  Next <i class="fas fa-chevron-right"></i>
+                </button>
+              </div>
             </div>
           </div>
         </section>
 
-        <!-- VIEW 3: COURSES VIEW -->
+        <!-- VIEW 3: COURSES -->
         <section id="view-courses" class="view-section">
-          <div class="courses-header-card">
-            <h3>Academic Programs & Courses</h3>
-            <p>Explore enrolled student statistics by course discipline</p>
+          <div class="section-header">
+            <h2 class="section-title">Academic Courses</h2>
           </div>
-          
           <div class="courses-grid" id="coursesGrid">
-            <!-- Dynamically populated course cards -->
+            <p style="color: var(--text-muted);">Loading courses...</p>
           </div>
         </section>
 
-        <!-- VIEW 4: SETTINGS VIEW -->
+        <!-- VIEW 4: SETTINGS -->
         <section id="view-settings" class="view-section">
           <div class="settings-grid">
-            <!-- Student Account & Signout Section -->
+
+            <!-- Student Account Profile Card -->
             <div class="settings-card" id="userSettingsCard">
               <div class="settings-card-header">
                 <i class="fas fa-user-circle"></i>
@@ -274,7 +243,7 @@
               </div>
               <p>Current Backend Endpoint URL:</p>
               <div class="code-block" id="settingsApiUrl">http://localhost:5000/students</div>
-              <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+              <div style="margin-top: 1rem;">
                 <button class="btn btn-secondary" onclick="checkBackendHealth()">
                   <i class="fas fa-sync-alt"></i> Re-check Connection
                 </button>
@@ -293,6 +262,7 @@
                 </button>
               </div>
             </div>
+
           </div>
         </section>
 
@@ -300,96 +270,82 @@
     </main>
   </div>
 
-  <!-- Add / Edit Student Modal -->
+  <!-- ADD / EDIT STUDENT MODAL -->
   <div class="modal-backdrop" id="studentModal">
-    <div class="modal-card">
+    <div class="modal">
       <div class="modal-header">
         <h3 id="modalTitle">Add New Student</h3>
-        <button class="modal-close-btn modal-close-trigger">&times;</button>
+        <button class="modal-close" onclick="closeAllModals()"><i class="fas fa-times"></i></button>
       </div>
-
       <form id="studentForm">
-        <div class="modal-body">
-          <div class="form-grid">
-            <div class="form-group">
-              <label for="studentNameInput">Full Name *</label>
-              <input type="text" id="studentNameInput" class="form-control" placeholder="e.g. Alex Johnson" required>
-            </div>
-
-            <div class="form-group">
-              <label for="studentEmailInput">Email Address *</label>
-              <input type="email" id="studentEmailInput" class="form-control" placeholder="e.g. alex@university.edu" required>
-            </div>
-
-            <div class="form-group">
-              <label for="studentCourseInput">Course / Program *</label>
-              <input type="text" id="studentCourseInput" class="form-control" placeholder="e.g. Computer Science" required>
-            </div>
-
-            <div class="form-group">
-              <label for="enrollmentDateInput">Enrollment Date *</label>
-              <input type="date" id="enrollmentDateInput" class="form-control" required>
-            </div>
-
-            <div class="form-group">
-              <label for="studentStatusInput">Status *</label>
-              <select id="studentStatusInput" class="form-control">
-                <option value="active">Active</option>
-                <option value="inactive">Inactive</option>
-              </select>
-            </div>
-          </div>
+        <div class="form-group">
+          <label class="form-label">Full Name *</label>
+          <input type="text" id="studentNameInput" class="form-input" placeholder="e.g. Alex Johnson" required />
         </div>
-
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary modal-close-trigger">Cancel</button>
+        <div class="form-group">
+          <label class="form-label">Email Address *</label>
+          <input type="email" id="studentEmailInput" class="form-input" placeholder="e.g. alex@university.edu" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Course Program *</label>
+          <input type="text" id="studentCourseInput" class="form-input" placeholder="e.g. Computer Science" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Enrollment Date *</label>
+          <input type="date" id="enrollmentDateInput" class="form-input" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Status</label>
+          <select id="studentStatusInput" class="form-input">
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeAllModals()">Cancel</button>
           <button type="submit" class="btn btn-primary" id="saveStudentBtn">Save Student</button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- View Student Details Modal -->
+  <!-- VIEW STUDENT DETAILS MODAL -->
   <div class="modal-backdrop" id="viewModal">
-    <div class="modal-card">
+    <div class="modal">
       <div class="modal-header">
-        <h3>Student Profile Details</h3>
-        <button class="modal-close-btn modal-close-trigger">&times;</button>
+        <h3><i class="fas fa-id-card" style="color: var(--accent-primary); margin-right: 0.5rem;"></i> Student Profile Details</h3>
+        <button class="modal-close" onclick="closeAllModals()"><i class="fas fa-times"></i></button>
       </div>
-
       <div class="modal-body" id="viewDetailsContent">
-        <!-- Dynamically rendered -->
+        <!-- Injected via JavaScript -->
       </div>
-
-      <div class="modal-footer">
-        <button class="btn btn-secondary modal-close-trigger">Close</button>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeAllModals()">Close</button>
       </div>
     </div>
   </div>
 
-  <!-- Delete Confirmation Modal -->
+  <!-- DELETE CONFIRMATION MODAL -->
   <div class="modal-backdrop" id="deleteModal">
-    <div class="modal-card">
+    <div class="modal">
       <div class="modal-header">
         <h3>Confirm Delete</h3>
-        <button class="modal-close-btn modal-close-trigger">&times;</button>
+        <button class="modal-close" onclick="closeAllModals()"><i class="fas fa-times"></i></button>
       </div>
-
-      <div class="modal-body">
-        <p>Are you sure you want to delete student <strong id="deleteStudentName"></strong>? This action cannot be undone.</p>
-      </div>
-
-      <div class="modal-footer">
-        <button class="btn btn-secondary modal-close-trigger">Cancel</button>
-        <button class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+      <p style="margin-bottom: 1rem; color: var(--text-muted);">
+        Are you sure you want to delete <strong id="deleteStudentName"></strong>?
+        This action cannot be undone.
+      </p>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeAllModals()">Cancel</button>
+        <button class="btn btn-danger" id="confirmDeleteBtn" onclick="handleDeleteStudent()">Delete</button>
       </div>
     </div>
   </div>
 
-  <!-- Toast Notification Container -->
-  <div class="toast-container" id="toastContainer"></div>
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toastContainer" class="toast-container"></div>
 
-  <!-- Application Logic -->
   <script src="app.js"></script>
 </body>
 </html>
