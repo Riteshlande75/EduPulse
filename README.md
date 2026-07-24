@@ -107,7 +107,7 @@ The server uses Winston and writes:
 
 ## Folder Notes
 
-- Backend code: `Backend/server_fixed.js`
+- Backend code: `Backend/server.js` (Modular entry point)
 
 ## Common Errors
 
