@@ -1,0 +1,44 @@
+# =============================================================
+#  STUDENT MANAGEMENT SYSTEM — .gitignore
+# =============================================================
+
+# ---- Environment Variables (NEVER commit these) ----
+.env
+.env.*
+!.env.example
+
+# ---- Windows Batch Scripts ----
+*.bat
+
+# ---- Node Modules ----
+node_modules/
+Backend/node_modules/
+Frontend/node_modules/
+
+# ---- Log Files ----
+*.log
+Backend/app.log
+Backend/error.log
+logs/
+
+# ---- OS Files ----
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ---- Editor / IDE ----
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# ---- Build Output ----
+dist/
+build/
+
+# ---- Misc ----
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
