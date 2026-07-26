@@ -7,10 +7,12 @@ const isDbConnected = () => mongoose.connection.readyState === 1;
 
 // Helper: generate JWT token
 const generateToken = (userId) => {
-  const secret = process.env.JWT_SECRET || "supersecretjwtkey_student_management_2026";
+  if (!process.env.JWT_SECRET) {
+    throw new Error("JWT_SECRET environment variable is not configured");
+  }
   return jwt.sign(
     { id: userId },
-    secret,
+    process.env.JWT_SECRET,
     { expiresIn: process.env.JWT_EXPIRES_IN || "7d" }
   );
 };
