@@ -18,10 +18,11 @@ const requireAuth = async (req, res, next) => {
 
   try {
     // Step 1: Verify the JWT signature & expiry
-    if (!process.env.JWT_SECRET) {
-      return res.status(500).json({ message: "Server configuration error. Please contact support." });
+    const secret = process.env.JWT_SECRET;
+    if (!secret) {
+      return res.status(500).json({ message: "Server configuration error. JWT_SECRET is not configured." });
     }
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, secret);
 
     // Step 2: Check if the user still exists in the database
     // If account was deleted, the token is immediately invalidated
