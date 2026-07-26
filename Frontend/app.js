@@ -159,49 +159,57 @@ function checkUserSession() {
   const user = getCurrentUser();
   const token = localStorage.getItem('sms_token');
 
-  // Authentication Gate: Always open login page first if user is not logged in
-  if (!user || !user.name || !token) {
-    window.location.href = 'login.html';
-    return false;
-  }
+  if (user && user.name && token) {
+    const initials = getInitials(user.name);
 
-  const initials = getInitials(user.name);
+    if (DOM.sidebarUserName) DOM.sidebarUserName.textContent = user.name;
+    if (DOM.sidebarUserEmail) DOM.sidebarUserEmail.textContent = user.email || 'student@university.edu';
+    if (DOM.sidebarUserAvatar) DOM.sidebarUserAvatar.textContent = initials;
+    if (DOM.sidebarUserProfile) DOM.sidebarUserProfile.style.display = 'flex';
+    if (DOM.sidebarAuthBtns) DOM.sidebarAuthBtns.style.display = 'none';
 
-  if (DOM.sidebarUserName) DOM.sidebarUserName.textContent = user.name;
-  if (DOM.sidebarUserEmail) DOM.sidebarUserEmail.textContent = user.email || 'student@university.edu';
-  if (DOM.sidebarUserAvatar) DOM.sidebarUserAvatar.textContent = initials;
-  if (DOM.sidebarUserProfile) DOM.sidebarUserProfile.style.display = 'flex';
-  if (DOM.sidebarAuthBtns) DOM.sidebarAuthBtns.style.display = 'none';
-
-  if (DOM.userSettingsInfo) {
-    DOM.userSettingsInfo.innerHTML = `
-      <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-        <div class="avatar" style="width: 48px; height: 48px; font-size: 1.1rem;">${initials}</div>
-        <div>
-          <h4 style="font-size: 1.1rem; color: var(--text-main);">${escapeHtml(user.name)}</h4>
-          <p style="font-size: 0.85rem; color: var(--text-muted);">${escapeHtml(user.email || '')}</p>
+    if (DOM.userSettingsInfo) {
+      DOM.userSettingsInfo.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+          <div class="avatar" style="width: 48px; height: 48px; font-size: 1.1rem;">${initials}</div>
+          <div>
+            <h4 style="font-size: 1.1rem; color: var(--text-main);">${escapeHtml(user.name)}</h4>
+            <p style="font-size: 0.85rem; color: var(--text-muted);">${escapeHtml(user.email || '')}</p>
+          </div>
         </div>
-      </div>
-      <div class="detail-item">
-        <span class="detail-label">Course Program</span>
-        <span class="detail-value">${escapeHtml(user.course || 'Computer Science')}</span>
-      </div>
-      <div class="detail-item">
-        <span class="detail-label">Account Type</span>
-        <span class="status-badge active">Active Student</span>
-      </div>
-      <div style="margin-top: 1.25rem; display: flex; flex-direction: column; gap: 0.65rem;">
-        <button class="btn btn-secondary" style="width: 100%; justify-content: center;" onclick="handleLogout()">
-          <i class="fas fa-sign-out-alt"></i> Sign Out Account
-        </button>
-        <button class="btn btn-danger" style="width: 100%; justify-content: center;" onclick="handleDeleteAccount()">
-          <i class="fas fa-user-times"></i> Delete My Account
-        </button>
-      </div>
-    `;
-  }
+        <div class="detail-item">
+          <span class="detail-label">Course Program</span>
+          <span class="detail-value">${escapeHtml(user.course || 'Computer Science')}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Account Type</span>
+          <span class="status-badge active">Active Student</span>
+        </div>
+        <div style="margin-top: 1.25rem; display: flex; flex-direction: column; gap: 0.65rem;">
+          <button class="btn btn-secondary" style="width: 100%; justify-content: center;" onclick="handleLogout()">
+            <i class="fas fa-sign-out-alt"></i> Sign Out Account
+          </button>
+          <button class="btn btn-danger" style="width: 100%; justify-content: center;" onclick="handleDeleteAccount()">
+            <i class="fas fa-user-times"></i> Delete My Account
+          </button>
+        </div>
+      `;
+    }
+  } else {
+    // Guest Mode (Allows viewing dashboard & navigating freely)
+    if (DOM.sidebarUserProfile) DOM.sidebarUserProfile.style.display = 'none';
+    if (DOM.sidebarAuthBtns) DOM.sidebarAuthBtns.style.display = 'flex';
 
-  return true;
+    if (DOM.userSettingsInfo) {
+      DOM.userSettingsInfo.innerHTML = `
+        <p style="color: var(--text-muted); margin-bottom: 1rem;">You are currently browsing in guest mode.</p>
+        <div style="display: flex; gap: 0.75rem;">
+          <a href="login.html" class="btn btn-secondary" style="flex: 1; justify-content: center;">Sign In</a>
+          <a href="register.html" class="btn btn-primary" style="flex: 1; justify-content: center;">Register Here</a>
+        </div>
+      `;
+    }
+  }
 }
 
 function handleLogout() {
