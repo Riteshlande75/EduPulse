@@ -18,7 +18,8 @@ const requireAuth = async (req, res, next) => {
 
   try {
     // Step 1: Verify the JWT signature & expiry
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const secret = process.env.JWT_SECRET || "supersecretjwtkey_student_management_2026";
+    const decoded = jwt.verify(token, secret);
 
     // Step 2: Check if the user still exists in the database
     // If account was deleted, the token is immediately invalidated
