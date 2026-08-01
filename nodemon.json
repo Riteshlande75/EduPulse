@@ -1,0 +1,12 @@
+{
+  "watch": ["Backend"],
+  "ext": "js,json,env",
+  "ignore": [
+    "Backend/app.log",
+    "Backend/error.log",
+    "*.log",
+    "Frontend/*",
+    "node_modules/*"
+  ],
+  "exec": "node Backend/server.js"
+}
