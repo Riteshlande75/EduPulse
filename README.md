@@ -1,117 +1,141 @@
-# Student Management App
+# 🎓 Student Management System (StudentMS)
 
-A simple Student Management application with a Node.js/Express backend and MongoDB (Mongoose). It provides CRUD APIs for managing students.
+A full-stack, production-ready **Student Management Application** built with **Node.js, Express, MongoDB**, and a high-performance **Vanilla JS & CSS Single Page Application (SPA)** frontend.
 
-## Features
+![NodeJS](https://img.shields.io/badge/Node.js-v18+-green.svg)
+![Express](https://img.shields.io/badge/Express.js-v5.0-blue.svg)
+![MongoDB](https://img.shields.io/badge/MongoDB-v9.0-emerald.svg)
+![License](https://img.shields.io/badge/License-ISC-purple.svg)
 
-- REST API for Students
-- MongoDB persistence using Mongoose
-- Request logging with Morgan
-- Error + request logging with Winston (writes to `app.log` and `error.log`)
+---
 
-## Tech Stack
+## 🌟 Key Features
 
-- Backend: Node.js, Express, Mongoose
-- Database: MongoDB
-- Logging: Morgan, Winston
-- CORS: `cors`
+### 💻 Frontend (Single Page Application)
+* **📊 Real-time Dashboard**: Interactive metric counters for total enrolled students, active/inactive statuses, and course program counts.
+* **🔍 Student Directory**: Live debouncing search engine by name, email, or course, with filtering by course and account status.
+* **📄 Smart Pagination**: Slices dataset to 10 records per page for instantaneous DOM rendering.
+* **✨ Glassmorphism Shimmer Loading**: Skeleton loading shimmers during data fetching for enhanced UX.
+* **🎨 Modern UI Theme**: High-contrast Dark Charcoal (`#181216`) and Muted Amaranth Rose (`#9D7E8F`) color palette with light/dark mode persistence.
+* **🛡️ Session-Aware Navigation**: Guest browsing mode support and automatic route protection.
 
-## Prerequisites
+### ⚙️ Backend (RESTful API & Security)
+* **🔐 Robust Authentication**: JWT (JSON Web Tokens) with password hashing using `bcryptjs` (salt 10).
+* **🛑 Rate Limiting**: Protection against brute-force attacks on login and registration endpoints.
+* **🛡️ Security Headers**: Configured with `helmet` and `cors` for cross-origin security.
+* **🗄️ Instant Revocation**: Account deletion endpoint immediately invalidates active JWT tokens.
+* **🔌 Offline Fallback**: Automatic local storage fallback with demo data when MongoDB is offline.
 
-- Node.js installed
-- MongoDB running locally **or** a hosted MongoDB connection string
+---
 
-## Backend Setup
+## 🛠️ Technology Stack
 
-1. Install dependencies (from the project root or backend folder):
-   - Backend folder is `Backend/`
+| Layer | Technology |
+| :--- | :--- |
+| **Backend Framework** | Node.js, Express.js |
+| **Database & ODM** | MongoDB, Mongoose ODM |
+| **Authentication** | JSON Web Token (JWT), bcryptjs |
+| **Security & Utilities**| Helmet, CORS, Express-Rate-Limit |
+| **Frontend Core** | Vanilla JavaScript (ES6+), HTML5 |
+| **Styling & Design** | Vanilla CSS3 (CSS Variables, Flexbox, Grid, Glassmorphism) |
 
-2. Environment variables
+---
 
-Create a `.env` file (the code reads from `process.env`):
+## 📂 Project Structure
+
+```text
+STUDENT MANAGEMENT APP/
+├── Backend/
+│   ├── config/
+│   │   ├── db.js             # MongoDB Mongoose connection driver
+│   │   └── logger.js         # Winston logging system
+│   ├── controllers/
+│   │   ├── authController.js # Signup, Login & Account Deletion logic
+│   │   └── studentController.js # Student CRUD operations
+│   ├── middleware/
+│   │   ├── errorHandler.js   # Centralized error handler
+│   │   └── requireAuth.js    # JWT authorization middleware
+│   ├── models/
+│   │   ├── Student.js        # Student record Mongoose schema
+│   │   └── User.js           # User account schema with bcrypt pre-save hook
+│   ├── routes/
+│   │   ├── authRoutes.js     # Auth API routes (/auth/signup, /auth/login)
+│   │   └── studentRoutes.js  # Student API routes (/students)
+│   ├── .env                  # Backend environment configuration
+│   └── server.js             # Main Express server entry point
+├── Frontend/
+│   ├── index.html            # Main Dashboard SPA layout
+│   ├── login.html            # Sign In view
+│   ├── register.html         # Student Registration view
+│   ├── app.js                # Core SPA state, DOM caching, and table pagination
+│   ├── auth.js               # Client authentication & form handlers
+│   └── styles.css            # Dark Charcoal & Amaranth Rose design system
+├── nodemon.json              # Hot-reloading watcher configuration
+├── package.json              # Root script orchestrator & dependencies
+└── README.md                 # Project documentation
+```
+
+---
+
+## ⚡ Quick Start Guide
+
+### Prerequisites
+* **Node.js** (v18.0.0 or higher)
+* **MongoDB** (Running locally on `127.0.0.1:27017` or Atlas cluster)
+
+### 1. Installation
+Clone or navigate to the project directory and install dependencies:
+
+```bash
+# Install root & backend dependencies
+npm install
+```
+
+### 2. Configure Environment
+Create a `.env` file inside the `Backend/` directory:
 
 ```env
-MONGODB_URL=mongodb://localhost:27017/student-management
 PORT=5000
+MONGODB_URL=mongodb://127.0.0.1:27017/student-management
+JWT_SECRET=supersecretjwtkey_student_management_2026
+JWT_EXPIRES_IN=7d
 ```
 
-Notes:
-- If `MONGODB_URL` is not provided, it defaults to `mongodb://localhost:27017/student-management`.
-- If `PORT` is not provided, it defaults to `5000`.
+### 3. Run Development Server
+Start the application with hot-reloading:
 
-3. Run the backend
-
-Start the server (you can use the way you already use in your project). The server will listen on:
-- `http://localhost:5000`
-
-## API Documentation
-
-### Create Student
-**POST** `/students`
-
-Request body (JSON):
-
-```json
-{
-  "name": "John Doe",
-  "email": "john@example.com",
-  "course": "Computer Science",
-  "enrollmentDate": "2024-01-15",
-  "status": "active"
-}
+```bash
+# Run server with auto-reloader (Nodemon)
+npm run dev
 ```
 
-- `name` (required)
-- `email` (required, unique)
-- `course` (required)
-- `enrollmentDate` (required)
-- `status` (optional, enum: `active` | `inactive`, default: `active`)
+Open your browser at:
+👉 **`http://localhost:5000`**
 
-### Get All Students
-**GET** `/students`
+---
 
-Response: array of students.
+## 📡 API Reference
 
-### Get Single Student
-**GET** `/students/:id`
+### Authentication Endpoints
 
-- `:id` must be a valid MongoDB ObjectId
+| Method | Endpoint | Description | Access |
+| :--- | :--- | :--- | :--- |
+| `POST` | `/auth/signup` | Register a new student account | Public |
+| `POST` | `/auth/login` | Sign in & receive JWT bearer token | Public |
+| `DELETE` | `/auth/account` | Permanently delete account & invalidate JWT | Protected |
 
-Returns:
-- `200` with student JSON
-- `404` with `{ "message": "Student not found" }` if not found
+### Student Records Endpoints
 
-### Update Student
-**PUT** `/students/:id`
+| Method | Endpoint | Description | Access |
+| :--- | :--- | :--- | :--- |
+| `GET` | `/students` | Fetch all student records | Public |
+| `GET` | `/students/:id` | Fetch single student profile by ID | Public |
+| `POST` | `/students` | Create a new student record | Protected |
+| `PUT` | `/students/:id` | Update student profile details | Protected |
+| `DELETE` | `/students/:id` | Delete student record | Protected |
 
-Request body: fields to update (same schema fields as create).
+---
 
-Response:
-- `200` with updated student JSON
+## 📜 License
 
-### Delete Student
-**DELETE** `/students/:id`
-
-Response:
-
-```json
-{ "message": "Student deleted successfully" }
-```
-
-## Logging
-
-The server uses Winston and writes:
-
-- `app.log` (info-level)
-- `error.log` (error-level)
-
-## Folder Notes
-
-- Backend code: `Backend/server.js` (Modular entry point)
-
-## Common Errors
-
-- **MongoDB connection error**: ensure MongoDB is running and `MONGODB_URL` is correct.
-- **Duplicate email**: `email` is marked as `unique` in the schema.
-- **Invalid ObjectId**: endpoints using `/:id` expect a valid MongoDB ObjectId.
-
+Distributed under the **ISC License**. Free for educational and commercial use.
