@@ -10,6 +10,10 @@ const connectDB = require("./config/db");
 const errorHandler = require("./middleware/errorHandler");
 const studentRoutes = require("./routes/studentRoutes");
 const authRoutes = require("./routes/authRoutes");
+const teacherRoutes = require("./routes/teacherRoutes");
+const attendanceRoutes = require("./routes/attendanceRoutes");
+const feeRoutes = require("./routes/feeRoutes");
+const gradeRoutes = require("./routes/gradeRoutes");
 
 const app = express();
 
@@ -30,13 +34,17 @@ app.use(express.static(path.join(__dirname, "../Frontend")));
 /* ------------------- Routes ------------------- */
 app.use("/auth", authRoutes);
 app.use("/students", studentRoutes);
+app.use("/teachers", teacherRoutes);
+app.use("/attendance", attendanceRoutes);
+app.use("/fees", feeRoutes);
+app.use("/grades", gradeRoutes);
 
 app.get(["/login", "/login.html"], (req, res) => {
-  res.sendFile(path.join(__dirname, "../Frontend/login.html"));
+  res.sendFile(path.join(__dirname, "../Frontend/pages/login.html"));
 });
 
 app.get(["/signup", "/signup.html", "/register", "/register.html"], (req, res) => {
-  res.sendFile(path.join(__dirname, "../Frontend/register.html"));
+  res.sendFile(path.join(__dirname, "../Frontend/pages/register.html"));
 });
 
 app.get(["/", "/index.html"], (req, res) => {
