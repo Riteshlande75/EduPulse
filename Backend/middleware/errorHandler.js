@@ -1,16 +1,10 @@
-const logger = require("../config/logger");
-
 const errorHandler = (err, req, res, next) => {
-  logger.error({
-    message: err.message,
-    method: req.method,
-    path: req.path,
-    params: req.params,
-    query: req.query,
-    body: req.method !== "GET" ? req.body : undefined,
+  const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
+  console.error(`[SERVER ERROR] ${err.message}`);
+  res.status(statusCode).json({
+    message: err.message || 'Internal Server Error',
+    stack: process.env.NODE_ENV === 'production' ? null : err.stack
   });
-
-  res.status(500).json({ message: "Internal Server Error" });
 };
 
 module.exports = errorHandler;

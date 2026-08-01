@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Student Management System</title>
-  <meta name="description" content="Modern Student Management System — Dashboard, Student Directory, Courses, and Settings." />
-  <link rel="stylesheet" href="styles.css" />
+  <meta name="description" content="Modern Student Management System — Dashboard, Students, Teachers, Classes, Attendance, Timetable, Exams, Results, Fees, Reports, Settings." />
+  <link rel="stylesheet" href="/assets/css/styles.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 </head>
@@ -23,20 +23,62 @@
       <ul class="nav-list">
         <li class="nav-item active" data-view="dashboard">
           <a href="#" onclick="switchView('dashboard'); return false;">
-            <i class="fas fa-chart-pie"></i>
+            <i class="fas fa-th-large"></i>
             <span>Dashboard</span>
           </a>
         </li>
         <li class="nav-item" data-view="students">
           <a href="#" onclick="switchView('students'); return false;">
-            <i class="fas fa-users"></i>
+            <i class="fas fa-user-graduate"></i>
             <span>Students</span>
           </a>
         </li>
-        <li class="nav-item" data-view="courses">
-          <a href="#" onclick="switchView('courses'); return false;">
-            <i class="fas fa-book-open"></i>
-            <span>Courses</span>
+        <li class="nav-item" data-view="teachers">
+          <a href="#" onclick="switchView('teachers'); return false;">
+            <i class="fas fa-chalkboard-teacher"></i>
+            <span>Teachers</span>
+          </a>
+        </li>
+        <li class="nav-item" data-view="classes">
+          <a href="#" onclick="switchView('classes'); return false;">
+            <i class="fas fa-school"></i>
+            <span>Classes</span>
+          </a>
+        </li>
+        <li class="nav-item" data-view="attendance">
+          <a href="#" onclick="switchView('attendance'); return false;">
+            <i class="fas fa-clipboard-user"></i>
+            <span>Attendance</span>
+          </a>
+        </li>
+        <li class="nav-item" data-view="timetable">
+          <a href="#" onclick="switchView('timetable'); return false;">
+            <i class="fas fa-calendar-alt"></i>
+            <span>Timetable</span>
+          </a>
+        </li>
+        <li class="nav-item" data-view="exams">
+          <a href="#" onclick="switchView('exams'); return false;">
+            <i class="fas fa-edit"></i>
+            <span>Exams</span>
+          </a>
+        </li>
+        <li class="nav-item" data-view="results">
+          <a href="#" onclick="switchView('results'); return false;">
+            <i class="fas fa-poll-h"></i>
+            <span>Results</span>
+          </a>
+        </li>
+        <li class="nav-item" data-view="fees">
+          <a href="#" onclick="switchView('fees'); return false;">
+            <i class="fas fa-file-invoice-dollar"></i>
+            <span>Fees</span>
+          </a>
+        </li>
+        <li class="nav-item" data-view="reports">
+          <a href="#" onclick="switchView('reports'); return false;">
+            <i class="fas fa-chart-line"></i>
+            <span>Reports</span>
           </a>
         </li>
         <li class="nav-item" data-view="settings">
@@ -46,46 +88,58 @@
           </a>
         </li>
       </ul>
-
-      <div class="sidebar-footer">
-        <div id="sidebarUserProfile" class="sidebar-user-card" style="display: none;">
-          <div class="user-avatar-sm" id="sidebarUserAvatar">ST</div>
-          <div class="sidebar-user-info">
-            <div class="sidebar-user-name" id="sidebarUserName">Student</div>
-            <div class="sidebar-user-email" id="sidebarUserEmail">student@university.edu</div>
-          </div>
-          <button class="btn-sidebar-logout" id="sidebarLogoutBtn" title="Sign Out Account" onclick="handleLogout()">
-            <i class="fas fa-sign-out-alt"></i>
-          </button>
-        </div>
-
-        <div id="sidebarAuthBtns" class="sidebar-auth-btns">
-          <a href="login.html" class="btn btn-secondary" style="width: 100%; justify-content: center; font-size: 0.825rem;">
-            <i class="fas fa-sign-in-alt"></i> Sign In
-          </a>
-          <a href="register.html" class="btn btn-primary" style="width: 100%; justify-content: center; font-size: 0.825rem;">
-            <i class="fas fa-user-plus"></i> Register Here
-          </a>
-        </div>
-      </div>
     </aside>
+
+    <!-- MOBILE SIDEBAR BACKDROP OVERLAY -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop" onclick="toggleSidebar(false)"></div>
 
     <!-- MAIN CONTENT -->
     <main class="main-content">
 
-      <!-- TOP HEADER -->
+      <!-- TOP HEADER (NAVBAR: Title | Notifications | Theme | User) -->
       <header class="top-header">
-        <div class="header-title">
-          <h1 id="pageTitle">Dashboard Overview</h1>
-          <p id="pageSubtitle">Real-time key metrics and student directory summary</p>
+        <div class="navbar-left">
+          <button class="mobile-toggle-btn" id="sidebarToggleBtn" title="Toggle Menu" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+          </button>
+          <div class="header-title">
+            <h1 id="pageTitle">Dashboard Overview</h1>
+            <p id="pageSubtitle">Real-time key metrics and student directory summary</p>
+          </div>
         </div>
-        <div class="header-actions">
-          <button class="theme-toggle-btn" id="themeToggleBtn" title="Toggle Light/Dark Theme">
+
+        <div class="header-actions navbar-actions">
+          <div class="notification-wrapper">
+            <button class="theme-toggle-btn" title="Notifications" onclick="showToast('System active. All services operational.', 'info')">
+              <i class="fas fa-bell"></i>
+            </button>
+            <span class="notification-badge">3</span>
+          </div>
+
+          <button class="theme-toggle-btn" id="themeToggleBtn" title="Toggle Dark/Light Theme">
             <i class="fas fa-sun" id="themeIcon"></i>
           </button>
-          <button class="btn btn-primary" id="addStudentBtn">
-            <i class="fas fa-plus"></i> Add Student
-          </button>
+
+          <!-- Navbar Auth Actions -->
+          <div id="navbarAuthBtns" class="navbar-auth-btns">
+            <a href="/login" class="btn btn-secondary btn-sm">
+              <i class="fas fa-sign-in-alt"></i> Sign In
+            </a>
+            <a href="/register" class="btn btn-primary btn-sm">
+              <i class="fas fa-user-plus"></i> Register Here
+            </a>
+          </div>
+
+          <div id="navbarUserProfile" class="navbar-user-profile" style="display: none; cursor: pointer;" title="Click to view My Student Profile" onclick="openMyProfileModal()">
+            <div class="user-avatar-sm" id="navbarUserAvatar">ST</div>
+            <div class="navbar-user-info">
+              <div class="navbar-user-name" id="navbarUserName">Student</div>
+              <div class="navbar-user-email" id="navbarUserEmail">student@university.edu</div>
+            </div>
+            <button class="btn btn-secondary btn-sm" id="navbarLogoutBtn" title="Sign Out Account" onclick="event.stopPropagation(); handleLogout();">
+              <i class="fas fa-sign-out-alt"></i> Sign Out
+            </button>
+          </div>
         </div>
       </header>
 
@@ -94,6 +148,37 @@
 
         <!-- VIEW 1: DASHBOARD -->
         <section id="view-dashboard" class="view-section active">
+          
+          <!-- DASHBOARD TOOLBAR & ACTION CONTROL -->
+          <div class="toolbar-card">
+            <div class="search-filter-group">
+              <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search by student name, email, or course..." />
+              </div>
+              <select class="select-filter courseFilterSelect">
+                <option value="all">All Courses</option>
+              </select>
+              <select class="select-filter" onchange="state.statusFilter=this.value; applyFilters();">
+                <option value="all">All Status</option>
+                <option value="active">Active Students</option>
+                <option value="inactive">Inactive Students</option>
+              </select>
+            </div>
+            <div class="toolbar-actions" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+              <button class="btn btn-secondary" onclick="exportToCSV()" title="Export Student Directory to CSV">
+                <i class="fas fa-file-csv"></i> Export CSV
+              </button>
+              <button class="btn btn-secondary" onclick="exportToPDF()" title="Print / Export Report to PDF">
+                <i class="fas fa-file-pdf"></i> Export PDF
+              </button>
+              <button class="btn btn-primary" id="addStudentBtn">
+                <i class="fas fa-plus"></i> Add Student
+              </button>
+            </div>
+          </div>
+
+          <!-- 1. KPI CARDS ROW -->
           <div class="stats-grid">
             <div class="stat-card">
               <div class="stat-icon total"><i class="fas fa-users"></i></div>
@@ -125,27 +210,153 @@
             </div>
           </div>
 
-          <div style="margin-top: 2rem;">
-            <div class="section-header">
-              <h2 class="section-title">Recent Students</h2>
+          <!-- 2. ATTENDANCE & FEE CHARTS ROW -->
+          <div class="dashboard-grid-row">
+            <!-- Attendance Bar Chart Card -->
+            <div class="dashboard-card">
+              <div class="card-header">
+                <h3><i class="fas fa-chart-bar" style="color: var(--accent-primary);"></i> Attendance Overview</h3>
+                <span class="status-badge active"><span class="badge-dot"></span> This Week</span>
+              </div>
+              <div class="card-body">
+                <div class="chart-summary">
+                  <div class="summary-item">
+                    <span class="summary-value">94.2%</span>
+                    <span class="summary-label">Average Presence Rate</span>
+                  </div>
+                  <div class="summary-item">
+                    <span class="summary-value" style="color: #34d399;">128</span>
+                    <span class="summary-label">Present Today</span>
+                  </div>
+                </div>
+                <div class="bar-chart-container">
+                  <div class="bar-column">
+                    <div class="bar-fill" style="height: 92%;" title="Mon: 92%"></div>
+                    <span class="bar-label">Mon</span>
+                  </div>
+                  <div class="bar-column">
+                    <div class="bar-fill" style="height: 96%;" title="Tue: 96%"></div>
+                    <span class="bar-label">Tue</span>
+                  </div>
+                  <div class="bar-column">
+                    <div class="bar-fill" style="height: 88%;" title="Wed: 88%"></div>
+                    <span class="bar-label">Wed</span>
+                  </div>
+                  <div class="bar-column">
+                    <div class="bar-fill" style="height: 95%;" title="Thu: 95%"></div>
+                    <span class="bar-label">Thu</span>
+                  </div>
+                  <div class="bar-column">
+                    <div class="bar-fill" style="height: 90%;" title="Fri: 90%"></div>
+                    <span class="bar-label">Fri</span>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="table-card" id="dashboardTableContainer">
-              <table class="students-table">
-                <thead>
-                  <tr>
-                    <th style="width: 32%;">Student</th>
-                    <th style="width: 24%;">Course</th>
-                    <th style="width: 18%;">Enrollment Date</th>
-                    <th style="width: 14%;">Status</th>
-                    <th style="width: 12%; text-align: right;">Actions</th>
-                  </tr>
-                </thead>
-                <tbody id="dashboardTableBody" class="studentsTableBody">
-                  <tr><td colspan="5" class="empty-state">Loading students...</td></tr>
-                </tbody>
-              </table>
+
+            <!-- Fee Collection Card -->
+            <div class="dashboard-card">
+              <div class="card-header">
+                <h3><i class="fas fa-wallet" style="color: var(--accent-primary);"></i> Tuition Fee Progress</h3>
+                <button class="btn btn-secondary btn-sm" onclick="switchView('fees')">View Fees</button>
+              </div>
+              <div class="card-body">
+                <div class="fee-progress-group">
+                  <div class="fee-progress-labels">
+                    <span>Collected: <strong>$142,500</strong></span>
+                    <span>Goal: <strong>$150,000</strong></span>
+                  </div>
+                  <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" style="width: 95%;"></div>
+                  </div>
+                </div>
+
+                <div class="fee-breakdown-list">
+                  <div class="fee-breakdown-item">
+                    <span>Computer Science</span>
+                    <strong>$54,000 / $55,000</strong>
+                  </div>
+                  <div class="fee-breakdown-item">
+                    <span>Data Science</span>
+                    <strong>$48,500 / $50,000</strong>
+                  </div>
+                  <div class="fee-breakdown-item">
+                    <span>Software Engineering</span>
+                    <strong>$40,000 / $45,000</strong>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
+
+          <!-- 3. RECENT STUDENTS & PAYMENTS LOG ROW -->
+          <div class="dashboard-grid-row">
+            <!-- Recent Students Table -->
+            <div class="dashboard-card" style="grid-column: span 1;">
+              <div class="card-header">
+                <h3><i class="fas fa-user-clock" style="color: var(--accent-primary);"></i> Recent Enrolled Students</h3>
+                <button class="btn btn-secondary btn-sm" onclick="switchView('students')">View All</button>
+              </div>
+              <div class="table-card" style="box-shadow: none; border: none;">
+                <table class="students-table">
+                  <thead>
+                    <tr>
+                      <th>Student</th>
+                      <th>Course</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="dashboardTableBody">
+                    <tr><td colspan="3" class="empty-state">Loading students...</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Recent Payments Log -->
+            <div class="dashboard-card" style="grid-column: span 1;">
+              <div class="card-header">
+                <h3><i class="fas fa-file-invoice-dollar" style="color: var(--accent-primary);"></i> Recent Payments</h3>
+                <button class="btn btn-secondary btn-sm" onclick="switchView('fees')">View All</button>
+              </div>
+              <div class="payment-list">
+                <div class="payment-item">
+                  <div class="payment-icon"><i class="fas fa-check-circle"></i></div>
+                  <div class="payment-details">
+                    <strong>Alex Johnson</strong>
+                    <span>Tuition Fee • Computer Science</span>
+                  </div>
+                  <div class="payment-amount">
+                    <strong>+$1,200</strong>
+                    <span>Today</span>
+                  </div>
+                </div>
+                <div class="payment-item">
+                  <div class="payment-icon"><i class="fas fa-check-circle"></i></div>
+                  <div class="payment-details">
+                    <strong>Sarah Smith</strong>
+                    <span>Tuition Fee • Data Science</span>
+                  </div>
+                  <div class="payment-amount">
+                    <strong>+$1,450</strong>
+                    <span>Yesterday</span>
+                  </div>
+                </div>
+                <div class="payment-item">
+                  <div class="payment-icon"><i class="fas fa-check-circle"></i></div>
+                  <div class="payment-details">
+                    <strong>Emily Davis</strong>
+                    <span>Lab Fee • Software Engineering</span>
+                  </div>
+                  <div class="payment-amount">
+                    <strong>+$950</strong>
+                    <span>3 days ago</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </section>
 
         <!-- VIEW 2: STUDENTS -->
@@ -181,7 +392,7 @@
                 <tr><td colspan="5" class="empty-state">Loading students...</td></tr>
               </tbody>
             </table>
-            <div class="pagination-footer">
+            <div class="pagination-bar">
               <div class="pagination-info">
                 Showing <span id="pageStart">0</span> to <span id="pageEnd">0</span> of <span id="totalRecords">0</span> students
               </div>
@@ -198,17 +409,268 @@
           </div>
         </section>
 
-        <!-- VIEW 3: COURSES -->
-        <section id="view-courses" class="view-section">
-          <div class="section-header">
-            <h2 class="section-title">Academic Courses</h2>
+        <!-- VIEW 3: TEACHERS -->
+        <section id="view-teachers" class="view-section">
+          <div class="toolbar-card" style="margin-bottom: 1.5rem;">
+            <div class="header-title">
+              <h2 class="section-title" style="font-size: 1.2rem;">Faculty & Instructors</h2>
+              <p style="font-size: 0.825rem; color: var(--text-muted);">Manage teachers, assigned courses, department leads, and office hours</p>
+            </div>
+            <button class="btn btn-primary" onclick="openAddTeacherModal()">
+              <i class="fas fa-plus"></i> Add New Teacher
+            </button>
           </div>
-          <div class="courses-grid" id="coursesGrid">
-            <!-- Dynamic course cards will be injected by JavaScript -->
+          <div class="courses-grid" id="teachersGrid">
+            <!-- Teachers injected by app.js -->
           </div>
         </section>
 
-        <!-- VIEW 4: SETTINGS -->
+        <!-- VIEW 4: CLASSES -->
+        <section id="view-classes" class="view-section">
+          <div class="section-header">
+            <h2 class="section-title">Classes & Grade Sections</h2>
+          </div>
+          <div class="courses-grid">
+            <div class="course-card">
+              <div class="course-icon"><i class="fas fa-laptop-code"></i></div>
+              <div class="course-info">
+                <h3>CS-101: Web Engineering</h3>
+                <p>Classroom 302 • Block A</p>
+                <span class="status-badge active" style="margin-top: 0.5rem;"><span class="badge-dot"></span> 42 Students Enrolled</span>
+              </div>
+              <button class="btn btn-secondary btn-sm" onclick="switchView('students')">View Enrolled</button>
+            </div>
+            <div class="course-card">
+              <div class="course-icon"><i class="fas fa-brain"></i></div>
+              <div class="course-info">
+                <h3>DS-204: Machine Learning</h3>
+                <p>Classroom 405 • Tech Wing</p>
+                <span class="status-badge active" style="margin-top: 0.5rem;"><span class="badge-dot"></span> 35 Students Enrolled</span>
+              </div>
+              <button class="btn btn-secondary btn-sm" onclick="switchView('students')">View Enrolled</button>
+            </div>
+            <div class="course-card">
+              <div class="course-icon"><i class="fas fa-shield-alt"></i></div>
+              <div class="course-info">
+                <h3>SEC-301: Ethical Hacking</h3>
+                <p>Cyber Lab 102 • Science Annex</p>
+                <span class="status-badge active" style="margin-top: 0.5rem;"><span class="badge-dot"></span> 28 Students Enrolled</span>
+              </div>
+              <button class="btn btn-secondary btn-sm" onclick="switchView('students')">View Enrolled</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- VIEW 5: ATTENDANCE -->
+        <section id="view-attendance" class="view-section">
+          <div class="toolbar-card" style="margin-bottom: 1.5rem;">
+            <div class="search-filter-group">
+              <div class="form-group" style="margin: 0; min-width: 180px;">
+                <label class="form-label" style="font-size: 0.75rem; color: var(--text-muted);">Select Attendance Date</label>
+                <input type="date" id="attendanceDateInput" class="form-input" style="padding: 0.5rem 0.85rem;" onchange="loadAttendanceForDate(this.value)" />
+              </div>
+            </div>
+            <button class="btn btn-primary" onclick="saveRollCallAttendance()">
+              <i class="fas fa-save"></i> Save Roll Call Attendance
+            </button>
+          </div>
+
+          <div class="stats-grid" style="margin-bottom: 1.5rem;">
+            <div class="stat-card">
+              <div class="stat-icon active"><i class="fas fa-calendar-check"></i></div>
+              <div class="stat-info">
+                <div class="stat-value" id="attPresentCount">0</div>
+                <div class="stat-label">Present Students</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon inactive"><i class="fas fa-user-times"></i></div>
+              <div class="stat-info">
+                <div class="stat-value" id="attAbsentCount">0</div>
+                <div class="stat-label">Absent Students</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon total"><i class="fas fa-user-clock"></i></div>
+              <div class="stat-info">
+                <div class="stat-value" id="attLateCount">0</div>
+                <div class="stat-label">Late Students</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="table-card">
+            <table class="students-table">
+              <thead>
+                <tr>
+                  <th>Student Name</th>
+                  <th>Course Program</th>
+                  <th>Attendance Status</th>
+                  <th>Remarks</th>
+                </tr>
+              </thead>
+              <tbody id="attendanceRollCallBody">
+                <!-- Attendance Rows injected by app.js -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- VIEW 6: TIMETABLE -->
+        <section id="view-timetable" class="view-section">
+          <div class="section-header">
+            <h2 class="section-title">Weekly Schedule</h2>
+          </div>
+          <div class="table-card">
+            <table class="students-table">
+              <thead>
+                <tr>
+                  <th>Time Slot</th>
+                  <th>Monday</th>
+                  <th>Tuesday</th>
+                  <th>Wednesday</th>
+                  <th>Thursday</th>
+                  <th>Friday</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>09:00 AM - 10:30 AM</strong></td>
+                  <td><span class="status-badge active">CS-101 (Lab A)</span></td>
+                  <td><span class="status-badge active">DS-204 (Hall B)</span></td>
+                  <td><span class="status-badge active">CS-101 (Lab A)</span></td>
+                  <td><span class="status-badge active">SEC-301 (Cyber Lab)</span></td>
+                  <td><span class="status-badge active">DS-204 (Hall B)</span></td>
+                </tr>
+                <tr>
+                  <td><strong>11:00 AM - 12:30 PM</strong></td>
+                  <td><span class="status-badge active">SEC-301 (Cyber Lab)</span></td>
+                  <td><span class="status-badge active">CS-101 (Lab A)</span></td>
+                  <td><span class="status-badge active">DS-204 (Hall B)</span></td>
+                  <td><span class="status-badge active">CS-101 (Lab A)</span></td>
+                  <td><span class="status-badge active">SEC-301 (Cyber Lab)</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- VIEW 7: EXAMS -->
+        <section id="view-exams" class="view-section">
+          <div class="section-header">
+            <h2 class="section-title">Upcoming Examination Schedule</h2>
+          </div>
+          <div class="courses-grid">
+            <div class="course-card">
+              <div class="course-icon"><i class="fas fa-file-signature"></i></div>
+              <div class="course-info">
+                <h3>Mid-Term: Data Structures</h3>
+                <p>Date: Nov 15, 2026 • 10:00 AM</p>
+                <span class="status-badge active" style="margin-top: 0.5rem;"><span class="badge-dot"></span> Main Examination Hall</span>
+              </div>
+            </div>
+            <div class="course-card">
+              <div class="course-icon"><i class="fas fa-file-code"></i></div>
+              <div class="course-info">
+                <h3>Practical: Software Engineering</h3>
+                <p>Date: Nov 18, 2026 • 02:00 PM</p>
+                <span class="status-badge active" style="margin-top: 0.5rem;"><span class="badge-dot"></span> Computer Center 1</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- VIEW 8: RESULTS & GPA -->
+        <section id="view-results" class="view-section">
+          <div class="toolbar-card" style="margin-bottom: 1.5rem;">
+            <div class="header-title">
+              <h2 class="section-title" style="font-size: 1.2rem;">Exam Marks & Academic GPA</h2>
+              <p style="font-size: 0.825rem; color: var(--text-muted);">Record student marks, auto-calculate GPA, and print official grade marksheets</p>
+            </div>
+            <button class="btn btn-primary" onclick="openAddGradeModal()">
+              <i class="fas fa-plus"></i> Enter Exam Grades
+            </button>
+          </div>
+
+          <div class="table-card">
+            <table class="students-table">
+              <thead>
+                <tr>
+                  <th>Student Name</th>
+                  <th>Course Program</th>
+                  <th>Semester</th>
+                  <th>Calculated GPA</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="gradesTableBody">
+                <!-- Grades injected by app.js -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- VIEW 9: FEES -->
+        <section id="view-fees" class="view-section">
+          <div class="toolbar-card" style="margin-bottom: 1.5rem;">
+            <div class="header-title">
+              <h2 class="section-title" style="font-size: 1.2rem;">Tuition Fees & Payments</h2>
+              <p style="font-size: 0.825rem; color: var(--text-muted);">Track student dues, record fee payments, and generate printable receipts</p>
+            </div>
+            <button class="btn btn-primary" onclick="openAddFeeModal()">
+              <i class="fas fa-plus"></i> Create Fee Invoice
+            </button>
+          </div>
+
+          <div class="table-card">
+            <table class="students-table">
+              <thead>
+                <tr>
+                  <th>Student Name</th>
+                  <th>Course</th>
+                  <th>Total Fee</th>
+                  <th>Paid Amount</th>
+                  <th>Due Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="feesTableBody">
+                <!-- Fees injected by app.js -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- VIEW 10: REPORTS -->
+        <section id="view-reports" class="view-section">
+          <div class="section-header">
+            <h2 class="section-title">Institutional Analytics & Reports</h2>
+          </div>
+          <div class="courses-grid">
+            <div class="course-card">
+              <div class="course-icon"><i class="fas fa-chart-pie"></i></div>
+              <div class="course-info">
+                <h3>Enrollment Distribution Report</h3>
+                <p>Comprehensive enrollment breakdown across departments.</p>
+              </div>
+              <button class="btn btn-secondary btn-sm" onclick="exportToPDF()">
+                <i class="fas fa-download"></i> Download Report
+              </button>
+            </div>
+            <div class="course-card">
+              <div class="course-icon"><i class="fas fa-file-invoice"></i></div>
+              <div class="course-info">
+                <h3>Annual Academic Summary</h3>
+                <p>Year-end audit of grades, attendance, and faculty performance.</p>
+              </div>
+              <button class="btn btn-secondary btn-sm" onclick="exportToCSV()">
+                <i class="fas fa-download"></i> Download Report
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- VIEW 11: SETTINGS -->
         <section id="view-settings" class="view-section">
           <div class="settings-grid">
             <div class="settings-card">
@@ -309,6 +771,22 @@
     </div>
   </div>
 
+  <!-- MY PROFILE DETAILS MODAL -->
+  <div class="modal-backdrop" id="myProfileModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>My Student Profile</h3>
+        <button class="modal-close" onclick="closeAllModals()">&times;</button>
+      </div>
+      <div class="modal-body" id="myProfileModalContent">
+        <!-- Student Details Injected by app.js -->
+      </div>
+      <div class="modal-footer modal-actions">
+        <button class="btn btn-secondary" onclick="closeAllModals()">Close</button>
+      </div>
+    </div>
+  </div>
+
   <!-- CONFIRM DELETE MODAL -->
   <div class="modal-backdrop" id="deleteModal">
     <div class="modal-card modal-sm">
@@ -328,11 +806,172 @@
     </div>
   </div>
 
+  <!-- ADD / EDIT TEACHER MODAL -->
+  <div class="modal-backdrop" id="teacherModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="teacherModalTitle">Add New Teacher</h3>
+        <button class="modal-close" onclick="closeAllModals()">&times;</button>
+      </div>
+      <form id="teacherForm">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label" for="teacherNameInput">Faculty Name *</label>
+            <input type="text" id="teacherNameInput" class="form-input" placeholder="e.g. Dr. Robert Vance" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="teacherEmailInput">Email Address *</label>
+            <input type="email" id="teacherEmailInput" class="form-input" placeholder="r.vance@university.edu" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="teacherDeptInput">Department *</label>
+            <input type="text" id="teacherDeptInput" class="form-input" placeholder="e.g. Computer Science" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="teacherSubjectInput">Assigned Subject *</label>
+            <input type="text" id="teacherSubjectInput" class="form-input" placeholder="e.g. Web Engineering" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="teacherPhoneInput">Phone Number</label>
+            <input type="text" id="teacherPhoneInput" class="form-input" placeholder="+1 (555) 234-5678" />
+          </div>
+        </div>
+        <div class="modal-footer modal-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeAllModals()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Teacher</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ADD FEE INVOICE MODAL -->
+  <div class="modal-backdrop" id="feeModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Create Fee Invoice</h3>
+        <button class="modal-close" onclick="closeAllModals()">&times;</button>
+      </div>
+      <form id="feeForm">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label" for="feeStudentName">Student Name *</label>
+            <input type="text" id="feeStudentName" class="form-input" placeholder="e.g. Alex Johnson" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="feeCourse">Course Program *</label>
+            <input type="text" id="feeCourse" class="form-input" placeholder="Computer Science" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="feeTotalAmount">Total Fee Amount ($) *</label>
+            <input type="number" id="feeTotalAmount" class="form-input" placeholder="1500" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="feePaidAmount">Paid Amount ($)</label>
+            <input type="number" id="feePaidAmount" class="form-input" placeholder="500" value="0" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="feeDueDate">Payment Due Date *</label>
+            <input type="date" id="feeDueDate" class="form-input" required />
+          </div>
+        </div>
+        <div class="modal-footer modal-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeAllModals()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Create Invoice</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- PRINTABLE FEE RECEIPT MODAL -->
+  <div class="modal-backdrop" id="feeReceiptModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Official Fee Payment Receipt</h3>
+        <button class="modal-close" onclick="closeAllModals()">&times;</button>
+      </div>
+      <div class="modal-body" id="feeReceiptContent">
+        <!-- Printable Receipt Content Injected by app.js -->
+      </div>
+      <div class="modal-footer modal-actions">
+        <button class="btn btn-secondary" onclick="closeAllModals()">Close</button>
+        <button class="btn btn-primary" onclick="printReceiptWindow()">
+          <i class="fas fa-print"></i> Print Receipt
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ENTER EXAM GRADES MODAL -->
+  <div class="modal-backdrop" id="gradeModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Enter Exam Grades & Marks</h3>
+        <button class="modal-close" onclick="closeAllModals()">&times;</button>
+      </div>
+      <form id="gradeForm">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label" for="gradeStudentName">Student Name *</label>
+            <input type="text" id="gradeStudentName" class="form-input" placeholder="e.g. Sarah Smith" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="gradeCourse">Course Program *</label>
+            <input type="text" id="gradeCourse" class="form-input" placeholder="Data Science" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="gradeSemester">Semester</label>
+            <input type="text" id="gradeSemester" class="form-input" value="Semester 1" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Subjects & Scores (Out of 100)</label>
+            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+              <div style="display: flex; gap: 0.5rem;">
+                <input type="text" class="form-input sub-name" placeholder="Subject 1 Name (e.g. Math)" value="Mathematics" required />
+                <input type="number" class="form-input sub-score" placeholder="Score" value="88" style="width: 100px;" required />
+              </div>
+              <div style="display: flex; gap: 0.5rem;">
+                <input type="text" class="form-input sub-name" placeholder="Subject 2 Name" value="Algorithms" required />
+                <input type="number" class="form-input sub-score" placeholder="Score" value="92" style="width: 100px;" required />
+              </div>
+              <div style="display: flex; gap: 0.5rem;">
+                <input type="text" class="form-input sub-name" placeholder="Subject 3 Name" value="Database Systems" required />
+                <input type="number" class="form-input sub-score" placeholder="Score" value="85" style="width: 100px;" required />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer modal-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeAllModals()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Calculate GPA & Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- PRINTABLE MARKSHEET MODAL -->
+  <div class="modal-backdrop" id="marksheetModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Academic Marksheet & Grade Card</h3>
+        <button class="modal-close" onclick="closeAllModals()">&times;</button>
+      </div>
+      <div class="modal-body" id="marksheetContent">
+        <!-- Printable Marksheet Content Injected by app.js -->
+      </div>
+      <div class="modal-footer modal-actions">
+        <button class="btn btn-secondary" onclick="closeAllModals()">Close</button>
+        <button class="btn btn-primary" onclick="printMarksheetWindow()">
+          <i class="fas fa-print"></i> Print Marksheet
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- TOAST NOTIFICATION CONTAINER -->
   <div class="toast-container" id="toastContainer"></div>
 
   <!-- MAIN JS SCRIPT -->
-  <script src="app.js"></script>
+  <script src="/assets/js/app.js"></script>
 
 </body>
 </html>
