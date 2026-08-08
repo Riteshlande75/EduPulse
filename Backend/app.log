@@ -1,9 +1,0 @@
-{"level":"info","message":{"duration":"15 ms","method":"GET","path":"/","query":{},"status":404},"timestamp":"2026-07-21T12:19:59.798Z"}
-{"level":"info","message":{"duration":"25 ms","method":"GET","params":{},"path":"/students","query":{},"status":200},"timestamp":"2026-07-21T12:20:15.842Z"}
-{"level":"info","message":{"duration":"1 ms","method":"GET","path":"/","query":{},"status":404},"timestamp":"2026-07-21T12:21:23.931Z"}
-{"level":"info","message":{"duration":"1 ms","method":"GET","path":"/","query":{},"status":404},"timestamp":"2026-07-21T12:22:11.781Z"}
-{"level":"info","message":{"duration":"11 ms","method":"GET","params":{},"path":"/","query":{},"status":200},"timestamp":"2026-07-21T12:23:36.079Z"}
-{"level":"info","message":{"duration":"13 ms","method":"GET","params":{},"path":"/","query":{},"status":200},"timestamp":"2026-07-21T12:26:41.439Z"}
-{"level":"info","message":{"duration":"173 ms","method":"GET","params":{},"path":"/students","query":{},"status":200},"timestamp":"2026-07-21T12:26:52.353Z"}
-{"level":"info","message":{"body":{"course":"Computer Science","email":"vaishnavi@example.com","enrollmentDate":"2026-07-21","name":"Vaishnavi Ithape","status":"active"},"duration":"53 ms","method":"POST","params":{},"path":"/students","query":{},"status":201},"timestamp":"2026-07-21T12:27:05.776Z"}
-{"level":"info","message":{"duration":"13 ms","method":"GET","params":{},"path":"/students","query":{},"status":200},"timestamp":"2026-07-21T12:27:12.724Z"}
