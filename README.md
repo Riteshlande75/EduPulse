@@ -36,6 +36,7 @@ A full-stack, production-ready **Student Management Application** built with **N
 | **Database & ODM** | MongoDB, Mongoose ODM |
 | **Authentication** | JSON Web Token (JWT), bcryptjs |
 | **Security & Utilities** | Helmet, CORS, Express-Rate-Limit |
+| **Security & Utilities** | Helmet, CORS, Express-Rate-Limit |
 | **Frontend Core** | Vanilla JavaScript (ES6+), HTML5 |
 | **Styling & Design** | Vanilla CSS3 (CSS Variables, Flexbox, Grid, Glassmorphism) |
 
@@ -91,11 +92,22 @@ graph TD
 ---
 
 ## 📥 Installation
+## 📥 Installation
 
 ### Prerequisites
 * **Node.js** (v18.0.0 or higher)
 * **MongoDB** (Running locally on `mongodb://127.0.0.1:27017` or MongoDB Atlas)
+* **MongoDB** (Running locally on `mongodb://127.0.0.1:27017` or MongoDB Atlas)
 
+### Step 1: Clone or Open Project
+Navigate to the root project folder in your terminal:
+
+```bash
+cd "STUDENT MANAGEMENT APP"
+```
+
+### Step 2: Install Backend Dependencies
+Install all required Node.js packages in the `Backend/` directory:
 ### Step 1: Clone or Open Project
 Navigate to the root project folder in your terminal:
 
@@ -108,15 +120,20 @@ Install all required Node.js packages in the `Backend/` directory:
 
 ```bash
 cd Backend
+cd Backend
 npm install
+cd ..
 cd ..
 ```
 
 ### Step 3: Configure Environment Variables
 Create or verify the `.env` file in `Backend/.env`:
+### Step 3: Configure Environment Variables
+Create or verify the `.env` file in `Backend/.env`:
 
 ```env
 PORT=5000
+MONGO_URI=mongodb://127.0.0.1:27017/student_management_db
 MONGO_URI=mongodb://127.0.0.1:27017/student_management_db
 JWT_SECRET=supersecretjwtkey_student_management_2026
 JWT_EXPIRES_IN=7d
@@ -143,8 +160,30 @@ node Backend/server.js
 ```
 
 Or using Nodemon (for development hot-reloading):
+---
+
+## 🚀 Running the Application
+
+### Method 1: 1-Click Launcher (Windows Batch Script)
+Simply double-click **`start-app.bat`** or **`run.bat`** in File Explorer!
+- Starts the Express backend server on `http://localhost:5000`.
+- Automatically opens `http://localhost:5000` in your default browser.
+
+```powershell
+.\start-app.bat
+```
+
+### Method 2: Command Line (Node.js)
+Start the Express server directly via Node:
 
 ```bash
+node Backend/server.js
+```
+
+Or using Nodemon (for development hot-reloading):
+
+```bash
+cd Backend
 cd Backend
 npm run dev
 ```
