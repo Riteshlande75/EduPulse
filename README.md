@@ -9,22 +9,11 @@ A full-stack, production-ready **Student Management Application** built with **N
 
 ---
 
-## 🌟 Key Features
 
-### 💻 Frontend (Single Page Application)
-* **📊 Real-time Dashboard**: Interactive metric counters for total enrolled students, active/inactive statuses, and course program counts.
-* **🔍 Student Directory**: Live debouncing search engine by name, email, or course, with filtering by course and account status.
-* **📄 Smart Pagination**: Slices dataset to 10 records per page for instantaneous DOM rendering.
-* **✨ Glassmorphism Shimmer Loading**: Skeleton loading shimmers during data fetching for enhanced UX.
-* **🎨 Modern UI Theme**: High-contrast Dark Charcoal (`#181216`) and Muted Amaranth Rose (`#9D7E8F`) color palette with light/dark mode persistence.
-* **🛡️ Session-Aware Navigation**: Guest browsing mode support and automatic route protection.
-
-### ⚙️ Backend (RESTful API & Security)
-* **🔐 Robust Authentication**: JWT (JSON Web Tokens) with password hashing using `bcryptjs` (salt 10).
-* **🛑 Rate Limiting**: Protection against brute-force attacks on login and registration endpoints.
-* **🛡️ Security Headers**: Configured with `helmet` and `cors` for cross-origin security.
-* **🗄️ Instant Revocation**: Account deletion endpoint immediately invalidates active JWT tokens.
-* **🔌 Offline Fallback**: Automatic local storage fallback with demo data when MongoDB is offline.
+### ⚙️ Backend (RESTful API & Database)
+* **🔐 Authentication**: JWT (JSON Web Tokens) with password hashing via `bcryptjs`.
+* **🛑 Rate Limiting & Security**: Rate-limited authentication routes with `helmet` and `cors` security headers.
+* **🗄️ MongoDB Database**: Mongoose schemas for Students, Teachers, Attendance, Fees, Grades, and Users.
 
 ---
 
@@ -35,7 +24,7 @@ A full-stack, production-ready **Student Management Application** built with **N
 | **Backend Framework** | Node.js, Express.js |
 | **Database & ODM** | MongoDB, Mongoose ODM |
 | **Authentication** | JSON Web Token (JWT), bcryptjs |
-| **Security & Utilities**| Helmet, CORS, Express-Rate-Limit |
+| **Security & Utilities** | Helmet, CORS, Express-Rate-Limit |
 | **Frontend Core** | Vanilla JavaScript (ES6+), HTML5 |
 | **Styling & Design** | Vanilla CSS3 (CSS Variables, Flexbox, Grid, Glassmorphism) |
 
@@ -47,65 +36,108 @@ A full-stack, production-ready **Student Management Application** built with **N
 STUDENT MANAGEMENT APP/
 ├── Backend/
 │   ├── config/
-│   │   ├── db.js             # MongoDB Mongoose connection driver
-│   │   └── logger.js         # Winston logging system
+│   │   └── db.js                 # MongoDB connection driver
 │   ├── controllers/
-│   │   ├── authController.js # Signup, Login & Account Deletion logic
-│   │   └── studentController.js # Student CRUD operations
+│   │   ├── authController.js     # Signup, Login & Account Deletion logic
+│   │   ├── studentController.js  # Student CRUD operations
+│   │   ├── teacherController.js  # Faculty management operations
+│   │   ├── attendanceController.js # Roll-call attendance logger
+│   │   ├── feeController.js      # Fee invoice & receipt generator
+│   │   └── gradeController.js    # Exam marks & GPA calculator
 │   ├── middleware/
-│   │   ├── errorHandler.js   # Centralized error handler
-│   │   └── requireAuth.js    # JWT authorization middleware
+│   │   ├── errorHandler.js       # Centralized error handler
+│   │   └── requireAuth.js        # JWT authorization middleware
 │   ├── models/
-│   │   ├── Student.js        # Student record Mongoose schema
-│   │   └── User.js           # User account schema with bcrypt pre-save hook
+│   │   ├── Student.js            # Student record Mongoose schema
+│   │   ├── User.js               # User account Mongoose schema
+│   │   ├── Teacher.js            # Faculty Mongoose schema
+│   │   ├── Attendance.js         # Daily attendance schema
+│   │   ├── Fee.js                # Tuition fee invoice schema
+│   │   └── Grade.js              # Subject marks & GPA schema
 │   ├── routes/
-│   │   ├── authRoutes.js     # Auth API routes (/auth/signup, /auth/login)
-│   │   └── studentRoutes.js  # Student API routes (/students)
-│   ├── .env                  # Backend environment configuration
-│   └── server.js             # Main Express server entry point
+│   │   ├── authRoutes.js         # Auth API routes (/auth)
+│   │   ├── studentRoutes.js      # Student API routes (/students)
+│   │   ├── teacherRoutes.js      # Teacher API routes (/teachers)
+│   │   ├── attendanceRoutes.js   # Attendance API routes (/attendance)
+│   │   ├── feeRoutes.js          # Fee API routes (/fees)
+│   │   └── gradeRoutes.js        # Grade API routes (/grades)
+│   ├── .env                      # Backend environment configuration
+│   └── server.js                 # Main Express server entry point
 ├── Frontend/
-│   ├── index.html            # Main Dashboard SPA layout
-│   ├── login.html            # Sign In view
-│   ├── register.html         # Student Registration view
-│   ├── app.js                # Core SPA state, DOM caching, and table pagination
-│   ├── auth.js               # Client authentication & form handlers
-│   └── styles.css            # Dark Charcoal & Amaranth Rose design system
-├── nodemon.json              # Hot-reloading watcher configuration
-├── package.json              # Root script orchestrator & dependencies
-└── README.md                 # Project documentation
+│   ├── assets/
+│   │   ├── css/
+│   │   │   └── styles.css        # Master design system stylesheet
+│   │   └── js/
+│   │       ├── app.js            # Core SPA application engine
+│   │       └── auth.js           # Client login & signup script
+│   ├── pages/
+│   │   ├── login.html            # Dedicated Sign In view
+│   │   └── register.html         # Dedicated Student Registration view
+│   └── index.html                # Main SPA Dashboard layout
+├── .gitignore                    # Git ignore file
+├── run.bat                       # 1-Click launcher shortcut
+├── start-app.bat                 # Windows batch launcher (Starts server & opens browser)
+└── README.md                     # Project documentation
 ```
 
 ---
 
-## ⚡ Quick Start Guide
+## 📥 Installation
 
 ### Prerequisites
 * **Node.js** (v18.0.0 or higher)
-* **MongoDB** (Running locally on `127.0.0.1:27017` or Atlas cluster)
+* **MongoDB** (Running locally on `mongodb://127.0.0.1:27017` or MongoDB Atlas)
 
-### 1. Installation
-Clone or navigate to the project directory and install dependencies:
+### Step 1: Clone or Open Project
+Navigate to the root project folder in your terminal:
 
 ```bash
-# Install root & backend dependencies
-npm install
+cd "STUDENT MANAGEMENT APP"
 ```
 
-### 2. Configure Environment
-Create a `.env` file inside the `Backend/` directory:
+### Step 2: Install Backend Dependencies
+Install all required Node.js packages in the `Backend/` directory:
+
+```bash
+cd Backend
+npm install
+cd ..
+```
+
+### Step 3: Configure Environment Variables
+Create or verify the `.env` file in `Backend/.env`:
 
 ```env
 PORT=5000
-MONGODB_URL=mongodb://127.0.0.1:27017/student-management
+MONGO_URI=mongodb://127.0.0.1:27017/student_management_db
 JWT_SECRET=supersecretjwtkey_student_management_2026
 JWT_EXPIRES_IN=7d
 ```
 
-### 3. Run Development Server
-Start the application with hot-reloading:
+---
+
+## 🚀 Running the Application
+
+### Method 1: 1-Click Launcher (Windows Batch Script)
+Simply double-click **`start-app.bat`** or **`run.bat`** in File Explorer!
+- Starts the Express backend server on `http://localhost:5000`.
+- Automatically opens `http://localhost:5000` in your default browser.
+
+```powershell
+.\start-app.bat
+```
+
+### Method 2: Command Line (Node.js)
+Start the Express server directly via Node:
 
 ```bash
-# Run server with auto-reloader (Nodemon)
+node Backend/server.js
+```
+
+Or using Nodemon (for development hot-reloading):
+
+```bash
+cd Backend
 npm run dev
 ```
 
@@ -114,25 +146,6 @@ Open your browser at:
 
 ---
 
-## 📡 API Reference
-
-### Authentication Endpoints
-
-| Method | Endpoint | Description | Access |
-| :--- | :--- | :--- | :--- |
-| `POST` | `/auth/signup` | Register a new student account | Public |
-| `POST` | `/auth/login` | Sign in & receive JWT bearer token | Public |
-| `DELETE` | `/auth/account` | Permanently delete account & invalidate JWT | Protected |
-
-### Student Records Endpoints
-
-| Method | Endpoint | Description | Access |
-| :--- | :--- | :--- | :--- |
-| `GET` | `/students` | Fetch all student records | Public |
-| `GET` | `/students/:id` | Fetch single student profile by ID | Public |
-| `POST` | `/students` | Create a new student record | Protected |
-| `PUT` | `/students/:id` | Update student profile details | Protected |
-| `DELETE` | `/students/:id` | Delete student record | Protected |
 
 ---
 
