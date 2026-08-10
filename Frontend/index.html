@@ -672,39 +672,12 @@
 
         <!-- VIEW 11: SETTINGS -->
         <section id="view-settings" class="view-section">
-          <div class="settings-grid">
+          <div class="settings-grid" style="grid-template-columns: minmax(0, 550px);">
             <div class="settings-card">
               <h3><i class="fas fa-user-circle"></i> Student Profile</h3>
               <div id="userSettingsInfo">
                 <!-- User Session Details Injected by app.js -->
               </div>
-            </div>
-
-            <div class="settings-card">
-              <h3><i class="fas fa-server"></i> API Server Info</h3>
-              <div class="detail-item">
-                <span class="detail-label">API Endpoint</span>
-                <code id="settingsApiUrl" class="detail-value" style="font-size: 0.825rem; font-family: monospace;">http://localhost:5000/students</code>
-              </div>
-              <div class="detail-item">
-                <span class="detail-label">Backend Status</span>
-                <span class="status-badge active" id="settingsBackendStatus">
-                  <span class="badge-dot"></span> Active (Online)
-                </span>
-              </div>
-              <button class="btn btn-secondary btn-sm" style="margin-top: 1rem;" onclick="checkBackendHealth()">
-                <i class="fas fa-sync-alt"></i> Test Health Check
-              </button>
-            </div>
-
-            <div class="settings-card">
-              <h3><i class="fas fa-database"></i> Local Cache Management</h3>
-              <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 1rem;">
-                Reset browser local storage cache to restore original demo student records.
-              </p>
-              <button class="btn btn-danger btn-sm" onclick="resetLocalCache()">
-                <i class="fas fa-trash-alt"></i> Reset Local Cache
-              </button>
             </div>
           </div>
         </section>
