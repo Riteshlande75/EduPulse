@@ -1306,3 +1306,36 @@ h1, h2, h3, h4, h5, h6 {
     bottom: 1rem;
   }
 }
+
+/* Progress Bar Utilities */
+.progress-bar-bg {
+  width: 100%;
+  height: 6px;
+  background: var(--bg-tertiary, #2A2026);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-color, #9D7E8F), #C29BB0);
+  border-radius: 999px;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Faculty & Teacher Avatar Badges */
+.teacher-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(157, 126, 143, 0.25), rgba(157, 126, 143, 0.05));
+  border: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: var(--accent-color, #9D7E8F);
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
