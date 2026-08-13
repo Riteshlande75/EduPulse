@@ -412,14 +412,41 @@
         <!-- VIEW 3: TEACHERS -->
         <section id="view-teachers" class="view-section">
           <div class="toolbar-card" style="margin-bottom: 1.5rem;">
-            <div class="header-title">
-              <h2 class="section-title" style="font-size: 1.2rem;">Faculty & Instructors</h2>
-              <p style="font-size: 0.825rem; color: var(--text-muted);">Manage teachers, assigned courses, department leads, and office hours</p>
+            <div class="search-filter-group">
+              <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="teacherSearchInput" placeholder="Search by faculty name, subject, department..." oninput="filterTeachersUI(this.value)" />
+              </div>
             </div>
             <button class="btn btn-primary" onclick="openAddTeacherModal()">
               <i class="fas fa-plus"></i> Add New Teacher
             </button>
           </div>
+
+          <div class="stats-grid" style="margin-bottom: 1.5rem;">
+            <div class="stat-card">
+              <div class="stat-icon total"><i class="fas fa-chalkboard-teacher"></i></div>
+              <div class="stat-info">
+                <div class="stat-value">18</div>
+                <div class="stat-label">Total Faculty</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon active"><i class="fas fa-user-check"></i></div>
+              <div class="stat-info">
+                <div class="stat-value">16</div>
+                <div class="stat-label">Active Instructors</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon courses"><i class="fas fa-award"></i></div>
+              <div class="stat-info">
+                <div class="stat-value">6</div>
+                <div class="stat-label">Department Leads</div>
+              </div>
+            </div>
+          </div>
+
           <div class="courses-grid" id="teachersGrid">
             <!-- Teachers injected by app.js -->
           </div>
@@ -427,36 +454,113 @@
 
         <!-- VIEW 4: CLASSES -->
         <section id="view-classes" class="view-section">
-          <div class="section-header">
-            <h2 class="section-title">Classes & Grade Sections</h2>
+          <div class="toolbar-card" style="margin-bottom: 1.5rem;">
+            <div class="search-filter-group">
+              <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search class section, room number, instructor..." />
+              </div>
+            </div>
+            <button class="btn btn-primary" onclick="showToast('Class section builder opened', 'info')">
+              <i class="fas fa-plus"></i> Create New Class
+            </button>
           </div>
+
+          <div class="stats-grid" style="margin-bottom: 1.5rem;">
+            <div class="stat-card">
+              <div class="stat-icon total"><i class="fas fa-school"></i></div>
+              <div class="stat-info">
+                <div class="stat-value">12</div>
+                <div class="stat-label">Active Class Sections</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon active"><i class="fas fa-door-open"></i></div>
+              <div class="stat-info">
+                <div class="stat-value">16</div>
+                <div class="stat-label">Available Classrooms</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon courses"><i class="fas fa-users-class"></i></div>
+              <div class="stat-info">
+                <div class="stat-value">88%</div>
+                <div class="stat-label">Capacity Utilization</div>
+              </div>
+            </div>
+          </div>
+
           <div class="courses-grid">
             <div class="course-card">
               <div class="course-icon"><i class="fas fa-laptop-code"></i></div>
               <div class="course-info">
-                <h3>CS-101: Web Engineering</h3>
-                <p>Classroom 302 • Block A</p>
-                <span class="status-badge active" style="margin-top: 0.5rem;"><span class="badge-dot"></span> 42 Students Enrolled</span>
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.25rem;">
+                  <h3>CS-101: Web Engineering</h3>
+                  <span class="status-badge active"><span class="badge-dot"></span> Section A</span>
+                </div>
+                <p><i class="fas fa-user-tie"></i> Dr. Robert Vance • <i class="fas fa-map-marker-alt"></i> Room 302 (Block A)</p>
+                <div style="margin-top: 0.75rem;">
+                  <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem;">
+                    <span>Enrolled Capacity</span>
+                    <strong>42 / 50 Students</strong>
+                  </div>
+                  <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" style="width: 84%;"></div>
+                  </div>
+                </div>
               </div>
-              <button class="btn btn-secondary btn-sm" onclick="switchView('students')">View Enrolled</button>
+              <div style="display: flex; gap: 0.5rem; margin-top: 0.75rem;">
+                <button class="btn btn-secondary btn-sm" style="flex: 1;" onclick="switchView('students')">View Students</button>
+                <button class="btn btn-secondary btn-sm" onclick="showToast('Class schedule: Mon, Wed 09:00 AM', 'info')"><i class="fas fa-clock"></i></button>
+              </div>
             </div>
+
             <div class="course-card">
               <div class="course-icon"><i class="fas fa-brain"></i></div>
               <div class="course-info">
-                <h3>DS-204: Machine Learning</h3>
-                <p>Classroom 405 • Tech Wing</p>
-                <span class="status-badge active" style="margin-top: 0.5rem;"><span class="badge-dot"></span> 35 Students Enrolled</span>
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.25rem;">
+                  <h3>DS-204: Machine Learning</h3>
+                  <span class="status-badge active"><span class="badge-dot"></span> Section B</span>
+                </div>
+                <p><i class="fas fa-user-tie"></i> Prof. Elena Rostova • <i class="fas fa-map-marker-alt"></i> Room 405 (Tech Wing)</p>
+                <div style="margin-top: 0.75rem;">
+                  <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem;">
+                    <span>Enrolled Capacity</span>
+                    <strong>35 / 40 Students</strong>
+                  </div>
+                  <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" style="width: 87.5%;"></div>
+                  </div>
+                </div>
               </div>
-              <button class="btn btn-secondary btn-sm" onclick="switchView('students')">View Enrolled</button>
+              <div style="display: flex; gap: 0.5rem; margin-top: 0.75rem;">
+                <button class="btn btn-secondary btn-sm" style="flex: 1;" onclick="switchView('students')">View Students</button>
+                <button class="btn btn-secondary btn-sm" onclick="showToast('Class schedule: Tue, Thu 11:00 AM', 'info')"><i class="fas fa-clock"></i></button>
+              </div>
             </div>
+
             <div class="course-card">
               <div class="course-icon"><i class="fas fa-shield-alt"></i></div>
               <div class="course-info">
-                <h3>SEC-301: Ethical Hacking</h3>
-                <p>Cyber Lab 102 • Science Annex</p>
-                <span class="status-badge active" style="margin-top: 0.5rem;"><span class="badge-dot"></span> 28 Students Enrolled</span>
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.25rem;">
+                  <h3>SEC-301: Ethical Hacking</h3>
+                  <span class="status-badge active"><span class="badge-dot"></span> Section C</span>
+                </div>
+                <p><i class="fas fa-user-tie"></i> Dr. Marcus Sterling • <i class="fas fa-map-marker-alt"></i> Cyber Lab 102</p>
+                <div style="margin-top: 0.75rem;">
+                  <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem;">
+                    <span>Enrolled Capacity</span>
+                    <strong>28 / 30 Students</strong>
+                  </div>
+                  <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" style="width: 93.3%;"></div>
+                  </div>
+                </div>
               </div>
-              <button class="btn btn-secondary btn-sm" onclick="switchView('students')">View Enrolled</button>
+              <div style="display: flex; gap: 0.5rem; margin-top: 0.75rem;">
+                <button class="btn btn-secondary btn-sm" style="flex: 1;" onclick="switchView('students')">View Students</button>
+                <button class="btn btn-secondary btn-sm" onclick="showToast('Class schedule: Mon, Fri 01:00 PM', 'info')"><i class="fas fa-clock"></i></button>
+              </div>
             </div>
           </div>
         </section>
@@ -518,37 +622,52 @@
 
         <!-- VIEW 6: TIMETABLE -->
         <section id="view-timetable" class="view-section">
-          <div class="section-header">
-            <h2 class="section-title">Weekly Schedule</h2>
+          <div class="toolbar-card" style="margin-bottom: 1.5rem;">
+            <div class="header-title">
+              <h2 class="section-title" style="font-size: 1.2rem;">Institutional Class Schedule</h2>
+              <p style="font-size: 0.825rem; color: var(--text-muted);">Weekly lecture time slots, instructor allocations, and room assignments</p>
+            </div>
+            <button class="btn btn-secondary" onclick="showToast('Exporting schedule to PDF...', 'info')">
+              <i class="fas fa-print"></i> Print Schedule
+            </button>
           </div>
+
           <div class="table-card">
             <table class="students-table">
               <thead>
                 <tr>
-                  <th>Time Slot</th>
-                  <th>Monday</th>
-                  <th>Tuesday</th>
-                  <th>Wednesday</th>
-                  <th>Thursday</th>
-                  <th>Friday</th>
+                  <th style="width: 18%;">Time Slot</th>
+                  <th style="width: 16%;">Monday</th>
+                  <th style="width: 16%;">Tuesday</th>
+                  <th style="width: 16%;">Wednesday</th>
+                  <th style="width: 16%;">Thursday</th>
+                  <th style="width: 16%;">Friday</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td><strong>09:00 AM - 10:30 AM</strong></td>
-                  <td><span class="status-badge active">CS-101 (Lab A)</span></td>
-                  <td><span class="status-badge active">DS-204 (Hall B)</span></td>
-                  <td><span class="status-badge active">CS-101 (Lab A)</span></td>
-                  <td><span class="status-badge active">SEC-301 (Cyber Lab)</span></td>
-                  <td><span class="status-badge active">DS-204 (Hall B)</span></td>
+                  <td><span class="status-badge active"><i class="fas fa-laptop-code"></i> CS-101 (Room 302)</span></td>
+                  <td><span class="status-badge active"><i class="fas fa-brain"></i> DS-204 (Hall B)</span></td>
+                  <td><span class="status-badge active"><i class="fas fa-laptop-code"></i> CS-101 (Room 302)</span></td>
+                  <td><span class="status-badge active"><i class="fas fa-shield-alt"></i> SEC-301 (Cyber Lab)</span></td>
+                  <td><span class="status-badge active"><i class="fas fa-brain"></i> DS-204 (Hall B)</span></td>
                 </tr>
                 <tr>
                   <td><strong>11:00 AM - 12:30 PM</strong></td>
-                  <td><span class="status-badge active">SEC-301 (Cyber Lab)</span></td>
-                  <td><span class="status-badge active">CS-101 (Lab A)</span></td>
-                  <td><span class="status-badge active">DS-204 (Hall B)</span></td>
-                  <td><span class="status-badge active">CS-101 (Lab A)</span></td>
-                  <td><span class="status-badge active">SEC-301 (Cyber Lab)</span></td>
+                  <td><span class="status-badge active"><i class="fas fa-shield-alt"></i> SEC-301 (Cyber Lab)</span></td>
+                  <td><span class="status-badge active"><i class="fas fa-laptop-code"></i> CS-101 (Room 302)</span></td>
+                  <td><span class="status-badge active"><i class="fas fa-brain"></i> DS-204 (Hall B)</span></td>
+                  <td><span class="status-badge active"><i class="fas fa-laptop-code"></i> CS-101 (Room 302)</span></td>
+                  <td><span class="status-badge active"><i class="fas fa-shield-alt"></i> SEC-301 (Cyber Lab)</span></td>
+                </tr>
+                <tr>
+                  <td><strong>01:30 PM - 03:00 PM</strong></td>
+                  <td><span class="status-badge active"><i class="fas fa-database"></i> DB-202 (Lab C)</span></td>
+                  <td><span class="status-badge active"><i class="fas fa-code-branch"></i> SE-401 (Room 104)</span></td>
+                  <td><span class="status-badge active"><i class="fas fa-database"></i> DB-202 (Lab C)</span></td>
+                  <td><span class="status-badge active"><i class="fas fa-code-branch"></i> SE-401 (Room 104)</span></td>
+                  <td><span class="status-badge active"><i class="fas fa-database"></i> DB-202 (Lab C)</span></td>
                 </tr>
               </tbody>
             </table>
@@ -557,25 +676,73 @@
 
         <!-- VIEW 7: EXAMS -->
         <section id="view-exams" class="view-section">
-          <div class="section-header">
-            <h2 class="section-title">Upcoming Examination Schedule</h2>
+          <div class="toolbar-card" style="margin-bottom: 1.5rem;">
+            <div class="header-title">
+              <h2 class="section-title" style="font-size: 1.2rem;">Examination Schedules & Tests</h2>
+              <p style="font-size: 0.825rem; color: var(--text-muted);">Mid-term and final examination dates, test venues, and syllabus weightage</p>
+            </div>
+            <button class="btn btn-primary" onclick="showToast('Schedule exam modal opened', 'info')">
+              <i class="fas fa-plus"></i> Schedule New Exam
+            </button>
           </div>
+
+          <div class="stats-grid" style="margin-bottom: 1.5rem;">
+            <div class="stat-card">
+              <div class="stat-icon total"><i class="fas fa-file-signature"></i></div>
+              <div class="stat-info">
+                <div class="stat-value">8</div>
+                <div class="stat-label">Scheduled Tests</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon active"><i class="fas fa-check-double"></i></div>
+              <div class="stat-info">
+                <div class="stat-value">14</div>
+                <div class="stat-label">Completed Exams</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon courses"><i class="fas fa-chart-line"></i></div>
+              <div class="stat-info">
+                <div class="stat-value">84.2%</div>
+                <div class="stat-label">Average Score</div>
+              </div>
+            </div>
+          </div>
+
           <div class="courses-grid">
             <div class="course-card">
               <div class="course-icon"><i class="fas fa-file-signature"></i></div>
               <div class="course-info">
-                <h3>Mid-Term: Data Structures</h3>
-                <p>Date: Nov 15, 2026 • 10:00 AM</p>
-                <span class="status-badge active" style="margin-top: 0.5rem;"><span class="badge-dot"></span> Main Examination Hall</span>
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.25rem;">
+                  <h3>Mid-Term: Data Structures</h3>
+                  <span class="status-badge active"><span class="badge-dot"></span> Nov 15, 2026</span>
+                </div>
+                <p><i class="fas fa-clock"></i> 10:00 AM - 12:00 PM • <i class="fas fa-map-marker-alt"></i> Main Exam Hall</p>
+                <div style="margin-top: 0.75rem; font-size: 0.8rem; color: var(--text-muted);">
+                  <div><i class="fas fa-weight-hanging"></i> Weightage: <strong>30% of Final Grade</strong></div>
+                </div>
               </div>
+              <button class="btn btn-secondary btn-sm" style="margin-top: 0.75rem;" onclick="showToast('Syllabus downloaded', 'success')">
+                <i class="fas fa-file-pdf"></i> Exam Guidelines
+              </button>
             </div>
+
             <div class="course-card">
               <div class="course-icon"><i class="fas fa-file-code"></i></div>
               <div class="course-info">
-                <h3>Practical: Software Engineering</h3>
-                <p>Date: Nov 18, 2026 • 02:00 PM</p>
-                <span class="status-badge active" style="margin-top: 0.5rem;"><span class="badge-dot"></span> Computer Center 1</span>
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.25rem;">
+                  <h3>Practical: Software Engineering</h3>
+                  <span class="status-badge active"><span class="badge-dot"></span> Nov 18, 2026</span>
+                </div>
+                <p><i class="fas fa-clock"></i> 02:00 PM - 04:30 PM • <i class="fas fa-map-marker-alt"></i> Computer Center 1</p>
+                <div style="margin-top: 0.75rem; font-size: 0.8rem; color: var(--text-muted);">
+                  <div><i class="fas fa-weight-hanging"></i> Weightage: <strong>40% of Final Grade</strong></div>
+                </div>
               </div>
+              <button class="btn btn-secondary btn-sm" style="margin-top: 0.75rem;" onclick="showToast('Syllabus downloaded', 'success')">
+                <i class="fas fa-file-pdf"></i> Exam Guidelines
+              </button>
             </div>
           </div>
         </section>
@@ -590,6 +757,30 @@
             <button class="btn btn-primary" onclick="openAddGradeModal()">
               <i class="fas fa-plus"></i> Enter Exam Grades
             </button>
+          </div>
+
+          <div class="stats-grid" style="margin-bottom: 1.5rem;">
+            <div class="stat-card">
+              <div class="stat-icon total"><i class="fas fa-award"></i></div>
+              <div class="stat-info">
+                <div class="stat-value">3.84</div>
+                <div class="stat-label">Institutional Avg GPA</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon active"><i class="fas fa-graduation-cap"></i></div>
+              <div class="stat-info">
+                <div class="stat-value">98.5%</div>
+                <div class="stat-label">Passing Rate</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon courses"><i class="fas fa-star"></i></div>
+              <div class="stat-info">
+                <div class="stat-value">42</div>
+                <div class="stat-label">Honors Graduates</div>
+              </div>
+            </div>
           </div>
 
           <div class="table-card">
@@ -620,6 +811,30 @@
             <button class="btn btn-primary" onclick="openAddFeeModal()">
               <i class="fas fa-plus"></i> Create Fee Invoice
             </button>
+          </div>
+
+          <div class="stats-grid" style="margin-bottom: 1.5rem;">
+            <div class="stat-card">
+              <div class="stat-icon active"><i class="fas fa-dollar-sign"></i></div>
+              <div class="stat-info">
+                <div class="stat-value">$142,500</div>
+                <div class="stat-label">Tuition Fees Collected</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon inactive"><i class="fas fa-exclamation-circle"></i></div>
+              <div class="stat-info">
+                <div class="stat-value">$12,400</div>
+                <div class="stat-label">Pending Dues</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon total"><i class="fas fa-chart-pie"></i></div>
+              <div class="stat-info">
+                <div class="stat-value">92%</div>
+                <div class="stat-label">Collection Rate</div>
+              </div>
+            </div>
           </div>
 
           <div class="table-card">
