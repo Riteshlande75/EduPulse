@@ -13,7 +13,6 @@ const authRoutes = require("./routes/authRoutes");
 const teacherRoutes = require("./routes/teacherRoutes");
 const attendanceRoutes = require("./routes/attendanceRoutes");
 const feeRoutes = require("./routes/feeRoutes");
-const gradeRoutes = require("./routes/gradeRoutes");
 
 const app = express();
 
@@ -37,7 +36,6 @@ app.use("/students", studentRoutes);
 app.use("/teachers", teacherRoutes);
 app.use("/attendance", attendanceRoutes);
 app.use("/fees", feeRoutes);
-app.use("/grades", gradeRoutes);
 
 app.get(["/login", "/login.html"], (req, res) => {
   res.sendFile(path.join(__dirname, "../Frontend/pages/login.html"));
