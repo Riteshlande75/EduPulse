@@ -43,7 +43,6 @@ const viewTitles = {
   attendance: { title: 'Daily Attendance', subtitle: 'Track student presence, absences, and monthly attendance rates' },
   timetable: { title: 'Class Timetable', subtitle: 'Weekly schedules, period allocations, and classroom assignments' },
   exams: { title: 'Examination Schedule', subtitle: 'Upcoming exams, test dates, venues, and subject allocations' },
-  results: { title: 'Academic Results', subtitle: 'Student grades, GPA standings, and examination marksheets' },
   fees: { title: 'Fee Management', subtitle: 'Tuition tracking, payment history, and pending invoice dues' },
   reports: { title: 'Analytics & Reports', subtitle: 'Institutional performance reports and academic analytics' },
   settings: { title: 'System Settings', subtitle: 'Manage application preferences, API server config, and local cache' }
@@ -66,7 +65,6 @@ document.addEventListener('DOMContentLoaded', () => {
   fetchTeachers();
   initAttendanceDateInput();
   fetchFees();
-  fetchGrades();
   checkBackendHealth();
 
   if (DOM.settingsApiUrl) {
@@ -414,9 +412,6 @@ function setupEventListeners() {
 
   const feeForm = document.getElementById('feeForm');
   if (feeForm) feeForm.addEventListener('submit', handleFeeSubmit);
-
-  const gradeForm = document.getElementById('gradeForm');
-  if (gradeForm) gradeForm.addEventListener('submit', handleGradeSubmit);
 }
 
 /* ==========================================================================
@@ -1537,149 +1532,7 @@ function printReceiptWindow() {
 }
 
 /* ==========================================================================
-   14. EXAM MARKS & GPA MARKSHEET MODULE
-   ========================================================================== */
-
-let gradeList = [
-  {
-    _id: 'g_1', studentName: 'Sarah Smith', course: 'Data Science', semester: 'Semester 1', gpa: 3.8,
-    subjects: [
-      { subjectName: 'Mathematics', score: 88, grade: 'A' },
-      { subjectName: 'Algorithms', score: 92, grade: 'A+' },
-      { subjectName: 'Database Systems', score: 85, grade: 'A' }
-    ]
-  },
-  {
-    _id: 'g_2', studentName: 'Alex Johnson', course: 'Computer Science', semester: 'Semester 1', gpa: 3.6,
-    subjects: [
-      { subjectName: 'Web Engineering', score: 82, grade: 'A-' },
-      { subjectName: 'Data Structures', score: 85, grade: 'A' },
-      { subjectName: 'Computer Networks', score: 79, grade: 'B+' }
-    ]
-  }
-];
-
-async function fetchGrades() {
-  try {
-    const res = await fetch('/grades');
-    if (res.ok) {
-      const data = await res.json();
-      if (Array.isArray(data) && data.length > 0) gradeList = data;
-    }
-  } catch (e) {}
-  renderGradesTable();
-}
-
-function renderGradesTable() {
-  const tbody = document.getElementById('gradesTableBody');
-  if (!tbody) return;
-
-  tbody.innerHTML = gradeList.map(g => `
-    <tr>
-      <td><strong>${escapeHtml(g.studentName)}</strong></td>
-      <td>${escapeHtml(g.course)}</td>
-      <td>${escapeHtml(g.semester)}</td>
-      <td><span class="status-badge active"><i class="fas fa-star"></i> GPA: ${g.gpa}</span></td>
-      <td class="actions-cell">
-        <button class="btn btn-secondary btn-sm" onclick="openMarksheetModal('${g._id}')">
-          <i class="fas fa-file-alt"></i> Printable Marksheet
-        </button>
-      </td>
-    </tr>
-  `).join('');
-}
-
-function openAddGradeModal() {
-  const form = document.getElementById('gradeForm');
-  if (form) form.reset();
-  const modal = document.getElementById('gradeModal');
-  if (modal) modal.classList.add('active');
-}
-
-async function handleGradeSubmit(e) {
-  e.preventDefault();
-  const studentName = document.getElementById('gradeStudentName')?.value.trim();
-  const course = document.getElementById('gradeCourse')?.value.trim();
-  const semester = document.getElementById('gradeSemester')?.value.trim() || 'Semester 1';
-
-  const names = document.querySelectorAll('#gradeForm .sub-name');
-  const scores = document.querySelectorAll('#gradeForm .sub-score');
-
-  const subjects = [];
-  let totalPts = 0;
-
-  names.forEach((el, i) => {
-    const subName = el.value.trim();
-    const score = Number(scores[i].value) || 0;
-    if (subName) {
-      let grade = 'B';
-      let pts = 3.0;
-      if (score >= 90) { grade = 'A+'; pts = 4.0; }
-      else if (score >= 80) { grade = 'A'; pts = 3.8; }
-      else if (score >= 70) { grade = 'B'; pts = 3.0; }
-      else if (score >= 60) { grade = 'C'; pts = 2.0; }
-
-      totalPts += pts;
-      subjects.push({ subjectName: subName, score, grade });
-    }
-  });
-
-  if (!studentName || !course || subjects.length === 0) return;
-
-  const gpa = Number((totalPts / subjects.length).toFixed(2));
-  const newGrade = { _id: 'g_' + Date.now(), studentName, course, semester, subjects, gpa };
-  gradeList.unshift(newGrade);
-  renderGradesTable();
-  closeAllModals();
-  showToast(`Exam grades recorded. Calculated GPA: ${gpa}`, 'success');
-}
-
-function openMarksheetModal(id) {
-  const item = gradeList.find(g => String(g._id) === String(id));
-  if (!item) return;
-
-  const content = document.getElementById('marksheetContent');
-  const modal = document.getElementById('marksheetModal');
-  if (!content || !modal) return;
-
-  const subsHtml = item.subjects.map(s => `
-    <div class="detail-item">
-      <span class="detail-label">${escapeHtml(s.subjectName)}</span>
-      <span class="detail-value">${s.score} / 100 (${s.grade})</span>
-    </div>
-  `).join('');
-
-  content.innerHTML = `
-    <div style="border: 1px solid var(--border-color); padding: 1.5rem; border-radius: var(--radius-md); background: var(--bg-primary);">
-      <div style="text-align: center; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1rem;">
-        <h2 style="font-size: 1.35rem; color: var(--text-main);">OFFICIAL ACADEMIC MARKSHEET</h2>
-        <p style="font-size: 0.85rem; color: var(--text-muted);">${escapeHtml(item.course)} • ${escapeHtml(item.semester)}</p>
-      </div>
-
-      <div style="margin-bottom: 1rem;">
-        <strong style="font-size: 1.1rem; color: var(--text-main);">${escapeHtml(item.studentName)}</strong>
-      </div>
-
-      <div class="detail-list" style="margin-bottom: 1.25rem;">
-        ${subsHtml}
-      </div>
-
-      <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.85rem; background: var(--bg-secondary); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
-        <strong style="color: var(--text-muted);">CUMULATIVE GRADE POINT AVERAGE (GPA)</strong>
-        <span class="status-badge active" style="font-size: 1rem;"><i class="fas fa-award"></i> ${item.gpa} / 4.0</span>
-      </div>
-    </div>
-  `;
-
-  modal.classList.add('active');
-}
-
-function printMarksheetWindow() {
-  window.print();
-}
-
-/* ==========================================================================
-   15. GLOBAL SCOPE BINDINGS
+   14. GLOBAL SCOPE BINDINGS
    ========================================================================== */
 
 window.viewStudentDetails = viewStudentDetails;
@@ -1705,6 +1558,3 @@ window.saveRollCallAttendance = saveRollCallAttendance;
 window.openAddFeeModal = openAddFeeModal;
 window.openFeeReceiptModal = openFeeReceiptModal;
 window.printReceiptWindow = printReceiptWindow;
-window.openAddGradeModal = openAddGradeModal;
-window.openMarksheetModal = openMarksheetModal;
-window.printMarksheetWindow = printMarksheetWindow;

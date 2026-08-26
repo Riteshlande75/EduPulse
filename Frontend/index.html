@@ -741,60 +741,6 @@
           </div>
         </section>
 
-        <!-- VIEW 8: RESULTS & GPA -->
-        <section id="view-results" class="view-section">
-          <div class="toolbar-card" style="margin-bottom: 1.5rem;">
-            <div class="header-title">
-              <h2 class="section-title" style="font-size: 1.2rem;">Exam Marks & Academic GPA</h2>
-              <p style="font-size: 0.825rem; color: var(--text-muted);">Record student marks, auto-calculate GPA, and print official grade marksheets</p>
-            </div>
-            <button class="btn btn-primary" onclick="openAddGradeModal()">
-              <i class="fas fa-plus"></i> Enter Exam Grades
-            </button>
-          </div>
-
-          <div class="stats-grid" style="margin-bottom: 1.5rem;">
-            <div class="stat-card">
-              <div class="stat-icon total"><i class="fas fa-award"></i></div>
-              <div class="stat-info">
-                <div class="stat-value">3.84</div>
-                <div class="stat-label">Institutional Avg GPA</div>
-              </div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-icon active"><i class="fas fa-graduation-cap"></i></div>
-              <div class="stat-info">
-                <div class="stat-value">98.5%</div>
-                <div class="stat-label">Passing Rate</div>
-              </div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-icon courses"><i class="fas fa-star"></i></div>
-              <div class="stat-info">
-                <div class="stat-value">42</div>
-                <div class="stat-label">Honors Graduates</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="table-card">
-            <table class="students-table">
-              <thead>
-                <tr>
-                  <th>Student Name</th>
-                  <th>Course Program</th>
-                  <th>Semester</th>
-                  <th>Calculated GPA</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody id="gradesTableBody">
-                <!-- Grades injected by app.js -->
-              </tbody>
-            </table>
-          </div>
-        </section>
-
         <!-- VIEW 9: FEES -->
         <section id="view-fees" class="view-section">
           <div class="toolbar-card" style="margin-bottom: 1.5rem;">
@@ -1078,72 +1024,6 @@
         <button class="btn btn-secondary" onclick="closeAllModals()">Close</button>
         <button class="btn btn-primary" onclick="printReceiptWindow()">
           <i class="fas fa-print"></i> Print Receipt
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ENTER EXAM GRADES MODAL -->
-  <div class="modal-backdrop" id="gradeModal">
-    <div class="modal-card">
-      <div class="modal-header">
-        <h3>Enter Exam Grades & Marks</h3>
-        <button class="modal-close" onclick="closeAllModals()">&times;</button>
-      </div>
-      <form id="gradeForm">
-        <div class="modal-body">
-          <div class="form-group">
-            <label class="form-label" for="gradeStudentName">Student Name *</label>
-            <input type="text" id="gradeStudentName" class="form-input" placeholder="e.g. Sarah Smith" required />
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="gradeCourse">Course Program *</label>
-            <input type="text" id="gradeCourse" class="form-input" placeholder="Data Science" required />
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="gradeSemester">Semester</label>
-            <input type="text" id="gradeSemester" class="form-input" value="Semester 1" />
-          </div>
-          <div class="form-group">
-            <label class="form-label">Subjects & Scores (Out of 100)</label>
-            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-              <div style="display: flex; gap: 0.5rem;">
-                <input type="text" class="form-input sub-name" placeholder="Subject 1 Name (e.g. Math)" value="Mathematics" required />
-                <input type="number" class="form-input sub-score" placeholder="Score" value="88" style="width: 100px;" required />
-              </div>
-              <div style="display: flex; gap: 0.5rem;">
-                <input type="text" class="form-input sub-name" placeholder="Subject 2 Name" value="Algorithms" required />
-                <input type="number" class="form-input sub-score" placeholder="Score" value="92" style="width: 100px;" required />
-              </div>
-              <div style="display: flex; gap: 0.5rem;">
-                <input type="text" class="form-input sub-name" placeholder="Subject 3 Name" value="Database Systems" required />
-                <input type="number" class="form-input sub-score" placeholder="Score" value="85" style="width: 100px;" required />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer modal-actions">
-          <button type="button" class="btn btn-secondary" onclick="closeAllModals()">Cancel</button>
-          <button type="submit" class="btn btn-primary">Calculate GPA & Save</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- PRINTABLE MARKSHEET MODAL -->
-  <div class="modal-backdrop" id="marksheetModal">
-    <div class="modal-card">
-      <div class="modal-header">
-        <h3>Academic Marksheet & Grade Card</h3>
-        <button class="modal-close" onclick="closeAllModals()">&times;</button>
-      </div>
-      <div class="modal-body" id="marksheetContent">
-        <!-- Printable Marksheet Content Injected by app.js -->
-      </div>
-      <div class="modal-footer modal-actions">
-        <button class="btn btn-secondary" onclick="closeAllModals()">Close</button>
-        <button class="btn btn-primary" onclick="printMarksheetWindow()">
-          <i class="fas fa-print"></i> Print Marksheet
         </button>
       </div>
     </div>
