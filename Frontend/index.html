@@ -5,6 +5,54 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Student Management System</title>
   <meta name="description" content="Modern Student Management System — Dashboard, Students, Teachers, Classes, Attendance, Timetable, Exams, Results, Fees, Reports, Settings." />
+  <!-- Tailwind CSS CDN & Exact Theme Configuration -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: ['selector', '[data-theme="dark"]'],
+      corePlugins: {
+        preflight: false,
+      },
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              bg: '#181216',
+              secondary: '#0F0F11',
+              card: 'rgba(15, 15, 17, 0.85)',
+              'card-hover': 'rgba(24, 18, 22, 0.95)',
+              glass: 'rgba(24, 18, 22, 0.85)',
+              accent: '#9D7E8F',
+              'accent-hover': '#b595a6',
+              border: 'rgba(157, 126, 143, 0.22)',
+              text: '#EAEAEA',
+              muted: '#9D7E8F',
+              dim: '#7a6170',
+              plum: '#9D7E8F',
+              darkplum: '#181216',
+              charcoal: '#0F0F11',
+              rose: '#9D7E8F',
+              'rose-light': '#C29BB0',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            display: ['Outfit', 'sans-serif'],
+          },
+          boxShadow: {
+            glow: '0 0 20px rgba(157, 126, 143, 0.35)',
+            glass: '0 4px 16px rgba(0, 0, 0, 0.5)',
+          },
+          borderRadius: {
+            sm: '8px',
+            md: '12px',
+            lg: '18px',
+            full: '9999px',
+          }
+        }
+      }
+    };
+  </script>
   <link rel="stylesheet" href="/assets/css/styles.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet" />

@@ -20,9 +20,11 @@
   --border-focus: #9D7E8F;
   
   --accent-primary: #9D7E8F;       /* Primary Accent */
+  --accent-color: #9D7E8F;
   --accent-primary-hover: #b595a6;
   --accent-secondary: #EAEAEA;
   --accent-gradient: linear-gradient(135deg, #9D7E8F 0%, #614656 100%);
+  --bg-tertiary: #241B21;
   
   --btn-primary-bg: #FFFFFF;      /* Primary Action Buttons */
   --btn-primary-text: #181216;    
@@ -59,16 +61,18 @@
   --bg-card: rgba(255, 255, 255, 0.85);
   --bg-card-hover: rgba(241, 245, 249, 1);
   --bg-glass: rgba(255, 255, 255, 0.85);
+  --bg-tertiary: #e2e8f0;
   
   --text-main: #0f172a;
   --text-muted: #475569;
   --text-dim: #94a3b8;
   
+  --accent-color: #9D7E8F;
   --border-color: rgba(0, 0, 0, 0.08);
   --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
   --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.12);
-  --shadow-glow: 0 0 20px rgba(99, 102, 241, 0.2);
+  --shadow-glow: 0 0 20px rgba(157, 126, 143, 0.2);
 }
 
 /* Reset & Base Layout */
@@ -1338,4 +1342,57 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 1.1rem;
   flex-shrink: 0;
 }
+
+/* ==========================================================================
+   TAILWIND CSS UTILITY EXTENSIONS & COMPATIBILITY HELPERS
+   ========================================================================== */
+
+/* Brand Color Utility Helpers (Exact UI Palettes) */
+.bg-brand-bg { background-color: var(--bg-primary) !important; }
+.bg-brand-secondary { background-color: var(--bg-secondary) !important; }
+.bg-brand-card { background-color: var(--bg-card) !important; }
+.bg-brand-glass { background-color: var(--bg-glass) !important; }
+.bg-brand-accent { background-color: var(--accent-primary) !important; }
+
+.text-brand-main { color: var(--text-main) !important; }
+.text-brand-muted { color: var(--text-muted) !important; }
+.text-brand-dim { color: var(--text-dim) !important; }
+.text-brand-accent { color: var(--accent-primary) !important; }
+
+.border-brand-color { border-color: var(--border-color) !important; }
+.border-brand-focus { border-color: var(--border-focus) !important; }
+
+/* Micro-Interaction & Modern Card Utilities */
+.hover-lift {
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+}
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.hover-glow {
+  transition: box-shadow var(--transition-normal), border-color var(--transition-normal);
+}
+.hover-glow:hover {
+  box-shadow: var(--shadow-glow);
+  border-color: var(--accent-primary);
+}
+
+/* Modern Glass Panel Utility */
+.glass-panel {
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+}
+
+/* Smooth Focus Ring */
+.focus-ring:focus {
+  outline: none;
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(157, 126, 143, 0.25);
+}
+
 
