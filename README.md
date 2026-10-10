@@ -9,7 +9,7 @@ A full-stack, production-ready **Student Management Application** built with **N
 ![License](https://img.shields.io/badge/License-ISC-purple.svg)
 
 > 📘 **Looking for full system architecture, API matrix, schemas, and module breakdowns?**  
-> Check out the complete technical guide in **[`documentation.md`](./documentation.md)**.
+> Check out the complete technical guide in **[`documentation.md`](./Documentation.md)**.
 
 ---
 
