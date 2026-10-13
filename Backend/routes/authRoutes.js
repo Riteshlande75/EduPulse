@@ -4,19 +4,19 @@ const rateLimit = require("express-rate-limit");
 const { signup, login, getMe, deleteAccount } = require("../controllers/authController");
 const requireAuth = require("../middleware/requireAuth");
 
-// Rate limiter for auth routes: max 10 requests per 15 minutes per IP
+// Rate limiter for auth routes: max 100 requests per 15 minutes per IP
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 10,
+  max: 100,
   message: {
-    message: "Too many login attempts from this device. Please try again after 15 minutes.",
+    message: "Too many attempts from this device. Please try again after 15 minutes.",
   },
   standardHeaders: true,
   legacyHeaders: false,
 });
 
-router.post("/register", authLimiter, signup);
-router.post("/login", authLimiter, login);
+router.post(["/register", "/signup"], authLimiter, signup);
+router.post(["/login", "/signin"], authLimiter, login);
 router.get("/me", requireAuth, getMe);
 
 // Delete account — requires valid JWT; once user is deleted, token is instantly invalidated
