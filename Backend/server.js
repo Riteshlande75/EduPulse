@@ -32,10 +32,19 @@ app.use(express.static(path.join(__dirname, "../Frontend")));
 
 /* ------------------- Routes ------------------- */
 app.use("/auth", authRoutes);
+app.use("/api/auth", authRoutes);
 app.use("/students", studentRoutes);
 app.use("/teachers", teacherRoutes);
 app.use("/attendance", attendanceRoutes);
 app.use("/fees", feeRoutes);
+
+// Return JSON 404 for unhandled API requests
+app.use((req, res, next) => {
+  if (req.path.startsWith("/auth") || req.path.startsWith("/api") || req.path.startsWith("/students") || req.path.startsWith("/teachers") || req.path.startsWith("/attendance") || req.path.startsWith("/fees")) {
+    return res.status(404).json({ message: `API endpoint ${req.method} ${req.originalUrl} not found.` });
+  }
+  next();
+});
 
 app.get(["/login", "/login.html"], (req, res) => {
   res.sendFile(path.join(__dirname, "../Frontend/pages/login.html"));
